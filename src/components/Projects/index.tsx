@@ -2,7 +2,7 @@
 
 import React from "react";
 import { projectsData, type Project } from "@/data/projectsData";
-import ProjectCard from "@/components/Projects/components/ProjectCard";
+import ProjectCard from "@/components/Projects/components/Card";
 
 type SectionTheme = {
   primary: string;
