@@ -33,9 +33,10 @@ export default function Home() {
             <Navbar />
             <Galaxy />
             <About />
-            <Education />
-            <Skills colors={theme} />
+
             <Experience colors={theme} />
+            <Education />
+            <Skills />
             <Projects colors={theme} />
             <Contacts colors={theme} />
             {/* <Galaxy />

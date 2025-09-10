@@ -1,26 +1,93 @@
+/* global.css (add/replace these parts) */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ---- tokens ---- */
+:root{
+  --background:#ffffff;
+  --foreground:#171717;
+
+  /* mouse glow vars */
+  --mouse-x:50vw;
+  --mouse-y:50vh;
+  --glow-size:1500px;               /* radius */
+  /* --glow-color:137,211,206;         */
+    --glow-color:77,219,209;        /* your teal as R,G,B */
+  --glow-opacity:0.12;             /* intensity */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme inline{
+  --color-background:var(--background);
+  --color-foreground:var(--foreground);
+  --font-sans:var(--font-geist-sans);
+  --font-mono:var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@media (prefers-color-scheme: dark){
+  :root{
+    --background:#0a0a0a;
+    --foreground:#ededed;
+    /* optional tweaks:
+       --glow-opacity:0.34;
+       --glow-size:680px;
+    */
   }
 }
 
+/* ---- body uses the gradient as part of its background ---- */
+body{
+  background:
+    radial-gradient(
+      circle var(--glow-size) at var(--mouse-x) var(--mouse-y),
+      rgba(var(--glow-color), var(--glow-opacity)),
+      transparent 65%
+    ),
+    var(--background);
+  color:var(--foreground);
+  font-family:var(--font-geist-sans, Arial, Helvetica, sans-serif);
+  background-attachment: fixed; /* keeps glow anchored to viewport */
+}
+
+/* respect reduced motion (optional) */
+@media (prefers-reduced-motion: reduce){
+  body{ background: var(--background); }
+}
+
+/* link + about font (your existing utilities) */
+@layer components{
+  .text-link{
+    @apply font-medium text-slate-200 hover:text-teal-300 focus-visible:text-teal-300;
+  }
+}
+@layer utilities{
+  .font-about{
+    font-family:var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+      BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+      "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol", "Noto Color Emoji";
+  }
+}
+
+/* ---- KEY: helper class to layer the same glow on opaque sections ----
+   This draws the same mouse-follow gradient ABOVE a section's color,
+   so you can keep solid backgrounds yet still see the glow.
+   Use via: class="bg-glow-section" style="--section-bg:#000000"
+*/
+
+.bg-glow-section{
+  background:
+    radial-gradient(
+       at var(--mouse-x) var(--mouse-y),
+      rgba(var(--glow-color), var(--glow-opacity)),
+      transparent 65%
+    ),
+    var(--section-bg, transparent);
+  background-attachment: fixed;
+
+  transition: background 140ms ease-out;
+  will-change: background;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  transition: background 10000ms ease-out;
+  will-change: background;
 }

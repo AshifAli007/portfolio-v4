@@ -4,7 +4,7 @@ import React from "react";
 // import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Footer() {
-//   const { theme } = useTheme();
+  //   const { theme } = useTheme();
 
   return (
     <footer
@@ -12,14 +12,14 @@ export default function Footer() {
       style={{ backgroundColor: "transparent" }}
     >
       <p
-        className="font-light"
+        className="font-light text-gray-300"
         // If you’ve loaded "kallisto", Tailwind will use it. Otherwise it falls back.
         style={{ fontFamily: "kallisto, sans-serif" }}
       >
         Made with
         <span
           className="mx-2 align-middle text-[30px]"
-          style={{ }}
+          style={{}}
         >
           ☕
         </span>
