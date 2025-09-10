@@ -1,9 +1,8 @@
-// components/Projects.tsx
 "use client";
 
 import React from "react";
 import { projectsData, type Project } from "@/data/projectsData";
-import ProjectCard from "./ProjectCard";
+import ProjectCard from "@/components/Projects/ProjectCard";
 
 type SectionTheme = {
   primary: string;
@@ -34,7 +33,7 @@ export default function Projects({
     <section
       id={id}
       className="px-4 py-8 md:px-8"
-      style={{ ["--section-bg" as any]: colors.secondary }}
+      style={{ ["--section-bg" as string]: colors.secondary }}
     >
       {/* Right-side 60% wrapper on lg+; 100% on mobile */}
       <div className="w-full lg:w-[60%] ml-auto">
@@ -75,6 +74,7 @@ export default function Projects({
                     secondary: colors.secondary,
                     tertiary: colors.tertiary,
                     primary30: colors.primary30,
+                    tertiary80: colors.tertiary80,
                   }}
                 />
               </div>

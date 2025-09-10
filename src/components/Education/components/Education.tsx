@@ -16,14 +16,14 @@ type Props = {
 
 export default function Education({
   id = "education",
-  data = educationData as any, // allow extras if provided
+  data = educationData,
   colors,
 }: Props) {
   return (
     <section
       id={id}
       className="min-h-[500px] w-full py-10"
-      style={{ ["--section-bg" as any]: colors.secondary }} // keep your color var like Experience
+      style={{ ["--section-bg" as string]: colors.secondary }} // keep your color var like Experience
     >
       <div className="mx-auto w-full max-w-6xl px-4 md:px-6 flex flex-row items-start justify-center">
         {/* Left image (hidden below lg) – kept empty to match Experience layout */}

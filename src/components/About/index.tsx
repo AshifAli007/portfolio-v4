@@ -28,7 +28,7 @@ export default function About({
         <section
             id={id}
             className="min-h-screen"
-            style={{ ['--section-bg' as any]: colors.secondary }}  // keep your color
+            style={{ ['--section-bg' as string]: colors.secondary }}  // keep your color
 
         >
             <div className="mx-auto w-full max-w-6xl px-4 md:px-6 flex flex-col-reverse lg:flex-row items-center justify-between gap-8 pt-10 md:pt-16 lg:pt-20">
@@ -92,6 +92,7 @@ export default function About({
 
                 {/* Image */}
                 <div className="pointer-events-none relative mt-6 lg:mt-0 lg:-left-[10%]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src={imgSrc}
                         alt="Portrait for About section"

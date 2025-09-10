@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     FaTwitter, FaLinkedinIn, FaGithub, FaYoutube, FaBloggerB, FaRedditAlien,
     FaStackOverflow, FaCodepen, FaInstagram, FaGitlab, FaMediumM
@@ -40,11 +40,6 @@ export default function Contacts({ id = "contacts", colors }: Props) {
         const t = setTimeout(() => setOpen(false), 4000);
         return () => clearTimeout(t);
     }, [open]);
-
-    const borderShadow = useMemo(
-        () => `0 0 30px ${colors.primary30 ?? "rgba(0,0,0,0.25)"}`,
-        [colors.primary30]
-    );
 
     async function handleContactForm(e: React.FormEvent) {
         e.preventDefault();

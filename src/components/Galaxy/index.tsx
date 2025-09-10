@@ -143,7 +143,7 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setClearColor(0x000000, 1);
-        renderer.physicallyCorrectLights = true;
+        // renderer.physicallyCorrectLights = true;
         container.appendChild(renderer.domElement);
 
         const controls = new OrbitControls(camera, renderer.domElement);
@@ -191,7 +191,7 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
             geo.setAttribute("pos", new THREE.InstancedBufferAttribute(pos, 3, false));
 
             const material = new THREE.ShaderMaterial({
-                extensions: { derivatives: "#extension GL_OES_standard_derivatives : enable" },
+                // extensions: { derivatives: "#extension GL_OES_standard_derivatives : enable" },
                 side: THREE.DoubleSide,
                 uniforms: {
                     uTexture: { value: new THREE.TextureLoader().load("/galaxy/particle.webp") },

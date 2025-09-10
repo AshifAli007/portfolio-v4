@@ -19,10 +19,10 @@ type Props = {
 export default function ExperienceCard({ item, colors }: Props) {
   // CSS vars so Tailwind can use arbitrary color values
   const cssVars = {
-    ["--accent" as any]: colors.primary,
-    ["--hoverBg" as any]: colors.primary30,
-    ["--title" as any]: colors.tertiary,
-    ["--text" as any]: colors.tertiary80,
+    ["--accent"]: colors.primary,
+    ["--hoverBg"]: colors.primary30,
+    ["--title"]: colors.tertiary,
+    ["--text"]: colors.tertiary80,
   } as React.CSSProperties;
 
   return (

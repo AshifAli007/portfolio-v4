@@ -39,8 +39,8 @@ export default function ProjectCard({ project, colors, layout = "vertical" }: Pr
           // backgroundColor: colors.secondary,
           boxShadow: `0 8px 28px -14px ${colors.primary30}`,
           // Title color variables
-          ["--title" as any]: "#ffffff",
-          ["--title-hover" as any]: colors.primary,
+          ["--title"]: "#ffffff",
+          ["--title-hover"]: colors.primary,
         } as React.CSSProperties
       }
     >
@@ -59,6 +59,8 @@ export default function ProjectCard({ project, colors, layout = "vertical" }: Pr
         <div className="relative z-[1] flex min-h-[220px] gap-4">
           <div className="basis-[40%] shrink-0 overflow-hidden rounded-lg bg-white/5 ring-1 ring-white/10">
             {image ? (
+              
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={image}
                 alt={projectName}
@@ -185,6 +187,7 @@ export default function ProjectCard({ project, colors, layout = "vertical" }: Pr
           {/* Full-width image */}
           {image && (
             <div className="mt-3 overflow-hidden rounded-lg bg-white/5 ring-1 ring-white/10">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={image}
                 alt={projectName}

@@ -24,7 +24,7 @@ export default function Experience({
         <section
             id={id}
             className="min-h-screen"
-            style={{ ['--section-bg' as any]: colors.secondary }}  // keep your color
+            style={{ ['--section-bg' as string]: colors.secondary }}  // keep your color
 
         >
             <div className="mx-auto w-full max-w-6xl px-4 md:px-6 flex flex-row items-start justify-center">
