@@ -3,8 +3,11 @@
 
 /* ---- tokens ---- */
 :root{
-  --background:#ffffff;
-  --foreground:#171717;
+  --background:#080808;
+  --foreground:#ededed;
+
+    /* --background:#ffffff;
+  --foreground:#171717; */
 
   /* mouse glow vars */
   --mouse-x:50vw;
