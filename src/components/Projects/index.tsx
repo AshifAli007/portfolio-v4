@@ -128,8 +128,8 @@ function ProjectCard({
       style={
         {
           boxShadow: `0 8px 28px -14px ${colors.primary30}`,
-          ["--title" as any]: "#ffffff",
-          ["--title-hover" as any]: colors.primary,
+          ["--title"]: "#ffffff",
+          ["--title-hover"]: colors.primary,
         } as React.CSSProperties
       }
     >
