@@ -12,7 +12,7 @@
   /* mouse glow vars */
   --mouse-x:50vw;
   --mouse-y:50vh;
-  --glow-size:1500px;               /* radius */
+  --glow-size:1200px;               /* radius */
   /* --glow-color:137,211,206;         */
     --glow-color:77,219,209;        /* your teal as R,G,B */
   --glow-opacity:0.12;             /* intensity */

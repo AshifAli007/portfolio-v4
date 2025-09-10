@@ -137,12 +137,14 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
             0.001,
             1000
         );
+        // camera position
         camera.position.set(1, 1, 3);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.setClearColor(0x000000, 1);
+        // contorls the background color
+        renderer.setClearColor(0x000000, 0);
         // renderer.physicallyCorrectLights = true;
         container.appendChild(renderer.domElement);
 
@@ -291,7 +293,8 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
             <div
                 id="galaxy-container"
                 ref={containerRef}
-                className="h-[100svh] w-screen overflow-hidden bg-black"
+                className="h-[100svh] w-screen overflow-hidden"
+                style={{ background: "var(--background)" }}
             />
         </div>
     );

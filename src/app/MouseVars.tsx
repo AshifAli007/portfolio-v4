@@ -10,8 +10,11 @@ export default function MouseVars() {
 
   useEffect(() => {
     const root = document.documentElement;
+    const galaxy = document.getElementById("galaxy-container");
 
     const onMove = (e: PointerEvent) => {
+      if (galaxy && e.target instanceof Node && galaxy.contains(e.target)) return;
+
       x.current = e.clientX;
       y.current = e.clientY;
 
