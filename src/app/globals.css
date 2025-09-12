@@ -123,3 +123,36 @@ body {
   transition: background 10000ms ease-out;
   will-change: background;
 }
+
+html, body {
+  overflow-x: hidden;             
+  overscroll-behavior-x: none;    
+}
+
+html, body {
+  scrollbar-width: none;          
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;                       
+  height: 0;
+}
+
+:where(html, body) {
+  scrollbar-width: none;            /* Firefox */
+  -ms-overflow-style: none;         /* IE/old Edge */
+}
+:where(html, body)::-webkit-scrollbar {
+  width: 0 !important;              /* Chrome/Edge/Safari */
+  height: 0 !important;
+}
+
+/* Also hide scrollbars on any scrollable element by default */
+:where(*):not(.allow-scrollbar) {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+:where(*):not(.allow-scrollbar)::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}

@@ -140,9 +140,16 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
         // camera position
         camera.position.set(1, 1, 3);
 
+        const setSizeToContainer = () => {
+  const w = container.clientWidth;
+  const h = container.clientHeight;
+  renderer.setSize(w, h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+};
         const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        setSizeToContainer();
         // contorls the background color
         renderer.setClearColor(0x000000, 0);
         // renderer.physicallyCorrectLights = true;
@@ -250,11 +257,7 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
 
         // Resize
         const onResize = () => {
-            const w = window.innerWidth;
-            const h = window.innerHeight;
-            camera.aspect = w / h;
-            camera.updateProjectionMatrix();
-            renderer.setSize(w, h);
+            setSizeToContainer();
         };
         window.addEventListener("resize", onResize);
 
@@ -293,7 +296,7 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
             <div
                 id="galaxy-container"
                 ref={containerRef}
-                className="h-[100svh] w-screen overflow-hidden"
+                className="h-[100svh] w-full overflow-hidden"
                 style={{ background: "var(--background)" }}
             />
         </div>
