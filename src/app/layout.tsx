@@ -15,7 +15,10 @@ export const metadata: Metadata = {
   },
   description:
     "Crafting digital experiences with creativity, code, and curiosity. Explore my portfolio of web projects, design, and innovation.",
-  // Favicon is served automatically from src/app/icon.png (or icon.svg)
+  icons: {
+    icon: [{ url: "/icon.png?v=3", type: "image/png" }],
+    apple: [{ url: "/icon.png?v=3" }],
+  }
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
