@@ -184,9 +184,9 @@ export default function Skills() {
             <Header iconSrc="/svg/skills/dev/aws.svg" title="AWS" />
 
             {/* Equal-width tiles, equal gaps, labels wrap to 2 lines max */}
-            <div className="mt-4 grid [grid-template-columns:repeat(auto-fill,minmax(96px,1fr))] gap-0.5">
+            <div className="mt-4 grid [grid-template-columns:repeat(auto-fill,minmax(66px,1fr))] gap-0.5">
               {AWS_ICONS.map((ic) => (
-                <div key={ic.alt} className="flex flex-col items-center gap-1 w-[96px] mx-auto">
+                <div key={ic.alt} className="flex flex-col items-center gap-1 w-[66px] mx-auto">
                   <DesignIcon spec={ic} />
                   <span
                     className="text-[10px] sm:text-[11px] leading-tight text-center opacity-80 break-words"

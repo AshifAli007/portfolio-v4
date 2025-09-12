@@ -18,6 +18,35 @@
   --glow-opacity:0.12;             /* intensity */
 }
 
+@media (hover: hover) and (pointer: fine) {
+  /* Hide system cursor by default (let children inherit) */
+  html, body {
+    cursor: none !important;
+  }
+
+  /* Show native pointer on interactives (element and descendants) */
+  a[href], a[href] *,
+  button, button *,
+  [role="button"], [role="button"] * {
+    cursor: pointer !important;
+  }
+
+  /* Text caret where appropriate */
+  input[type="text"], input[type="search"], textarea, [contenteditable="true"] {
+    cursor: text !important;
+  }
+
+  /* Opt-out helper for any subtree */
+  .allow-system-cursor, .allow-system-cursor * {
+    cursor: auto !important;
+  }
+
+  /* If the opt-out class is on a link, keep the hand cursor */
+  a[href].allow-system-cursor, .allow-system-cursor a[href] {
+    cursor: pointer !important;
+  }
+}
+
 @theme inline{
   --color-background:var(--background);
   --color-foreground:var(--foreground);
