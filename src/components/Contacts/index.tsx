@@ -122,7 +122,9 @@ export default function Contacts({ id = "contacts", colors }: Props) {
                     style={{ color: colors.primary, fontSize: "1.6rem" }}
                 >
                     Get In Touch!
+                    <p className="text-[0.78rem] text-gray-400">Let's <span className="text-link">create</span> something together</p>
                 </h1>
+                
 
                 <div className="flex flex-col lg:flex-row items-start gap-8">
                     {/* Form */}

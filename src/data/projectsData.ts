@@ -88,9 +88,20 @@ export const projectsData: Project[] = [
     id: 9,
     projectName: "Hack FSU",
     projectDesc:
-      "Won Hackathos for developing a site to visualize the music bytes using trigonometric functions sin and cos in mathematics.",
+            "A lightweight React app that turns any track into a responsive, sine-wave visual. As music plays, a neon “sin line” flexes in real time, creating an immersive, performance-friendly look",
     tags: ["React", "GSAP", "Geometry", "Maths"],
     demo: "https://hackfsu-acm-music-viz.netlify.app/",
     image: "/svg/newProjects/hackfsu.png",
+    code: "https://github.com/AshifAli007/HackFSU-SPR24",
+  },
+  {
+    id: 9,
+    projectName: "Particles",
+    projectDesc:
+      "Created using css and javascript. Move mouse to create enlarged particles around the mouse.",
+    tags: ["React", "GSAP", "Maths"],
+    demo: "https://particle-interaction.netlify.app/",
+    image: "/svg/newProjects/particles.png",
+    code: "https://github.com/AshifAli007/particles",
   },
 ];
