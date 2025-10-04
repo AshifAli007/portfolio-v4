@@ -294,7 +294,7 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
                 />
             </svg>
 
-            <div className="absolute left-[2%] bottom-[5%] z-[110]">
+            <div className="fixed left-[3%] bottom-[4%] z-[110]">
                 <Audio audioSrc="bg.mp3" />
             </div>
 

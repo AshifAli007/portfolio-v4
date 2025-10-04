@@ -56,9 +56,14 @@ export default function AudioToggle({
     targetAmpRef.current = playing ? 6 : 0; // px amplitude
   }, [playing]);
 
+  // Accent pulled from site theme (#89d3ce); adjust if theme changes
+  const accent = "#89d3ce";
+  const idleStroke = "rgba(255,255,255,0.55)";
+  const activeStroke = accent;
+
   useEffect(() => {
     const animate = () => {
-      phaseRef.current += 0.02;
+      phaseRef.current += 0.04;
       // Ease amplitude
       currentAmpRef.current += (targetAmpRef.current - currentAmpRef.current) * 0.08;
 
@@ -89,40 +94,53 @@ export default function AudioToggle({
       onClick={toggle}
       aria-pressed={playing}
       aria-label={playing ? "Mute background music" : "Play background music"}
-      className={`p-1 rounded-tl-[5px] rounded-tr-[5px] w-15 h-5 rounded-br-[5px] rounded-bl-[5px] bg-white group flex items-center select-none ${className}`}
+      className={[
+        "h-6 group flex items-center select-none px-2 py-1",
+        "rounded-tl-[6px] rounded-tr-[6px] rounded-br-[6px] rounded-bl-[6px]",
+        "bg-[rgba(0,0,0,0.25)] backdrop-blur-sm",
+        "border border-white/10 hover:border-[color:var(--accent)]",
+        "transition-colors",
+        playing ? "shadow-[0_0_0_1px_rgba(137,211,206,0.35),0_0_12px_-2px_rgba(137,211,206,0.45)]" : "shadow-none",
+        className,
+      ].join(" ")}
+      style={{ ["--accent" as string]: accent }}
     >
       <div
-        className={`relative flex items-center justify-center transition-colors
-         overflow-hidden`}
+        className="relative flex items-center justify-center overflow-hidden
+                   rounded-md"
       >
-        {/* Base center line (static) */}
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-px" />
+        {/* Base center line */}
+        {/* <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-px bg-white/25" /> */}
         {/* Wave path */}
         <svg
-          width={50}
-            height={35}
+          width={30}
+          height={34}
           className="pointer-events-none"
         >
           <path
             ref={pathRef}
-            stroke="black"
+            stroke={playing ? activeStroke : idleStroke}
             strokeWidth={2}
             fill="none"
             strokeLinecap="round"
             style={{
-              opacity: 0.5,
-              transition: "opacity 0.4s",
-              filter: "drop-shadow(0 0 2px rgba(255,255,255,0.6))",
+              opacity: playing ? 0.95 : 0.65,
+              transition: "stroke 220ms ease, opacity 300ms ease",
+              filter: playing
+                ? "drop-shadow(0 0 4px rgba(137,211,206,0.55))"
+                : "drop-shadow(0 0 2px rgba(255,255,255,0.25))",
             }}
           />
         </svg>
       </div>
       <span
-        className={`text-xs tracking-wider font-medium ${
-          playing ? "text-black" : "text-black"
-        }`}
+        className={[
+          "text-[0.6rem] tracking-wider font-medium uppercase",
+          "transition-colors",
+          playing ? "text-[color:var(--accent)]" : "text-white/70 group-hover:text-white/90",
+        ].join(" ")}
       >
-        Audio
+        {playing ? "On" : "Off"}
       </span>
     </button>
   );
