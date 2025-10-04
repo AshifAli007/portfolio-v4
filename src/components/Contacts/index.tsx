@@ -10,6 +10,7 @@ import { FiPhone, FiAtSign } from "react-icons/fi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { socialsData } from "@/data/socialData";
 import { contactsData } from "@/data/contactsData";
+import Map from "./map";
 
 type ThemeColors = {
     primary: string;
@@ -124,7 +125,7 @@ export default function Contacts({ id = "contacts", colors }: Props) {
                     Get In Touch!
                     <p className="text-[0.78rem] text-gray-400">{"Let's "} <span className="text-link">create</span> something together</p>
                 </h1>
-                
+
 
                 <div className="flex flex-col lg:flex-row items-start gap-8">
                     {/* Form */}
@@ -320,6 +321,9 @@ export default function Contacts({ id = "contacts", colors }: Props) {
                             <SocialIcon href={socialsData.gitlab} label="GitLab">
                                 <FaGitlab size={15} />
                             </SocialIcon>
+                        </div>
+                        <div className="mt-10">
+                            <Map height={280}/>
                         </div>
                     </div>
                 </div>

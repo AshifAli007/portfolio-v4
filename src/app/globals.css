@@ -156,3 +156,13 @@ body::-webkit-scrollbar {
   width: 0 !important;
   height: 0 !important;
 }
+
+
+.pigeon-attribution {
+  display: none;
+}
+
+.organic-map {
+  transition: clip-path 1s cubic-bezier(.77,0,.18,1);
+  will-change: clip-path;
+}
