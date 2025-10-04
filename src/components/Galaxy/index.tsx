@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import Audio from '@/components/Audio';
 
 type GalaxyProps = {
     /** Accent color for the outer ring (was theme.primary). */
@@ -141,13 +142,13 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
         camera.position.set(1, 1, 3);
 
         const setSizeToContainer = () => {
-  const w = container.clientWidth;
-  const h = container.clientHeight;
-  renderer.setSize(w, h);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  camera.aspect = w / h;
-  camera.updateProjectionMatrix();
-};
+            const w = container.clientWidth;
+            const h = container.clientHeight;
+            renderer.setSize(w, h);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+        };
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         setSizeToContainer();
         // contorls the background color
@@ -276,6 +277,7 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
     return (
         <div className="relative">
             {/* Down arrow */}
+
             <svg
                 onClick={() => {
                     document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
@@ -291,6 +293,11 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
                     d="m18.294 16.793-5.293 5.293V1h-1v21.086l-5.295-5.294-.707.707L12.501 24l6.5-6.5-.707-.707z"
                 />
             </svg>
+
+            <div className="absolute left-[2%] bottom-[5%] z-[110]">
+                <Audio audioSrc="bg.mp3" />
+            </div>
+
 
             {/* WebGL mount */}
             <div
