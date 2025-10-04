@@ -2,6 +2,8 @@
 
 import { Map, Marker, Overlay, GeoJsonLoader } from "pigeon-maps";
 import { useState } from "react";
+import type { Feature } from "geojson";
+
 
 
 type Props = { height?: number; className?: string };
@@ -9,7 +11,6 @@ type Props = { height?: number; className?: string };
 export default function FooterMapLite({ height = 260, className = "" }: Props) {
   const FIXED_CENTER: [number, number] = [30.447463, -84.309007]; // [lat, lng]
   const [center] = useState<[number, number]>(FIXED_CENTER);
-    const geoJsonLink = "https://raw.githubusercontent.com/danielcs88/fl_geo_json/refs/heads/master/geojson-fl-counties-fips.json"
 
 
   const provider = (x: number, y: number, z: number, dpr?: number) =>
@@ -28,7 +29,7 @@ export default function FooterMapLite({ height = 260, className = "" }: Props) {
       <Map
         center={center}
         zoom={6}
-        // provider={provider}
+        provider={provider}
         animate
         // metaWheelZoom={true}
         defaultWidth={600}
@@ -38,7 +39,7 @@ export default function FooterMapLite({ height = 260, className = "" }: Props) {
       >
         <GeoJsonLoader
         link={"geojson-fl.json"}
-        styleCallback={(feature, hover) =>
+        styleCallback={(_feature: Feature, hover: boolean) =>
           hover
             ? { fill: 'rgba(0, 160, 175, 0.73)', strokeWidth: '2', stroke: '#ffffffcb' }
             : { fill: 'rgba(137, 211, 206, 0.5)', strokeWidth: '1', stroke: '#0998c353' }
