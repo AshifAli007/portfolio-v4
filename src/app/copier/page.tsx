@@ -97,7 +97,7 @@ export default function CopierPage() {
             <textarea
               value={textOut}
               onChange={handleTextChange}
-              rows={12}
+              rows={16}
               data-gramm="false"
               data-gramm_editor="false"
               className="custom-scrollbar rounded-lg bg-black/50 border border-white/10 focus:border-cyan-400/60 focus:outline-none p-3 font-mono resize"
@@ -119,7 +119,7 @@ export default function CopierPage() {
           <textarea
             value={textIn}
             readOnly
-            rows={12}
+            rows={16}
             data-gramm="false"
             data-gramm_editor="false"
             className="custom-scrollbar rounded-lg bg-black/30 border border-white/10 focus:border-cyan-400/60 focus:outline-none p-3 font-mono resize"
