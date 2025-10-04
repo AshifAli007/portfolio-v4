@@ -63,7 +63,7 @@ export default function AudioToggle({
 
   useEffect(() => {
     const animate = () => {
-      phaseRef.current += 0.04;
+      phaseRef.current += 0.03;
       // Ease amplitude
       currentAmpRef.current += (targetAmpRef.current - currentAmpRef.current) * 0.08;
 
