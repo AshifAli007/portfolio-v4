@@ -97,7 +97,9 @@ export default function CopierPage() {
             <textarea
               value={textOut}
               onChange={handleTextChange}
-              rows={18}
+              rows={12}
+              data-gramm="false"
+              data-gramm_editor="false"
               className="custom-scrollbar rounded-lg bg-black/50 border border-white/10 focus:border-cyan-400/60 focus:outline-none p-3 font-mono resize"
               placeholder="Start typing..."
             />
@@ -117,8 +119,10 @@ export default function CopierPage() {
           <textarea
             value={textIn}
             readOnly
-            rows={15}
-            className="custom-scrollbar rounded-lg bg-black/30 border border-white/10 p-3 font-mono resize"
+            rows={12}
+            data-gramm="false"
+            data-gramm_editor="false"
+            className="custom-scrollbar rounded-lg bg-black/30 border border-white/10 focus:border-cyan-400/60 focus:outline-none p-3 font-mono resize"
             placeholder="Waiting for remote text..."
           />
         </div>
