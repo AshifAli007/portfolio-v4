@@ -7,7 +7,6 @@ import {
 } from "react-icons/fa";
 import { AiOutlineSend, AiOutlineCheckCircle } from "react-icons/ai";
 import { FiPhone, FiAtSign } from "react-icons/fi";
-import { HiOutlineLocationMarker } from "react-icons/hi";
 import { socialsData } from "@/data/socialData";
 import { contactsData } from "@/data/contactsData";
 import Map from "./map";
@@ -270,21 +269,7 @@ export default function Contacts({ id = "contacts", colors }: Props) {
                             </p>
                         </a>
 
-                        {/* Address */}
-                        <div className="mb-5 flex items-center">
-                            <div
-                                className="grid h-[28px] w-[28px] flex-shrink-0 place-items-center rounded-full text-[0.9rem] transition-transform"
-                                style={{ backgroundColor: colors.primary, color: colors.secondary }}
-                            >
-                                <HiOutlineLocationMarker />
-                            </div>
-                            <p
-                                className="ml-3 font-medium leading-tight break-words text-[0.78rem]"
-                                style={{ color: colors.tertiary }}
-                            >
-                                {contactsData.address}
-                            </p>
-                        </div>
+
 
                         {/* Socials */}
                         <div className="mt-8 flex flex-wrap items-center justify-center gap-5">
