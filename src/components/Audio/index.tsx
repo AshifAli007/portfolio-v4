@@ -11,7 +11,7 @@ type AudioToggleProps = {
 export default function AudioToggle({
   audioSrc,
   className = "",
-  initialVolume = 0.5,
+  initialVolume = 0.05,
 }: AudioToggleProps) {
   const [playing, setPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
