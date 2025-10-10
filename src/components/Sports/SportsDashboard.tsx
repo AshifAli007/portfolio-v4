@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { FaSyncAlt } from "react-icons/fa";
+import { LiaSyncSolid } from "react-icons/lia";
 
 import { useStravaOverview } from "@/hooks/useStravaOverview";
 import { getSummaryDistanceKm } from "@/lib/strava/aggregator";
@@ -578,13 +578,13 @@ const AthleteHeader = ({
           <button
             type="button"
             onClick={onSync}
-            className="absolute bottom-0 group mt-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/[0.05] text-white transition hover:border-white hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+            className="absolute bottom-0 group mt-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/[0.05] text-white transition hover:border-white hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
             title="Pull latest data"
             aria-label="Sync Strava data"
             disabled={isSyncing}
           >
-            <FaSyncAlt
-              className={`h-4 w-4 transition-transform duration-700 ${isSyncing ? "animate-spin" : "group-hover:-rotate-180"}`}
+            <LiaSyncSolid
+              className={`h-6 w-6 transition-transform duration-700 ${isSyncing ? "animate-spin" : "group-hover:rotate-135"}`}
               aria-hidden="true"
             />
           </button>
