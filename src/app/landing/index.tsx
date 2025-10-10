@@ -11,6 +11,7 @@ import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import Contacts from "@/components/Contacts";
+import RecentActivitiesPreview from "@/components/Sports/RecentActivitiesPreview";
 
 // --- Static metadata (replaces react-helmet) ---
 // export const metadata: Metadata = {
@@ -34,10 +35,12 @@ export default function Home() {
             <Galaxy />
             <About />
 
+
             <Experience colors={theme} />
             <Education />
             <Skills />
             <Projects colors={theme} />
+            <RecentActivitiesPreview />
             <Contacts colors={theme} />
             {/* <Galaxy />
         <About />
