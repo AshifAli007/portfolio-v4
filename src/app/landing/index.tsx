@@ -13,6 +13,7 @@ import Projects from "@/components/Projects";
 import Contacts from "@/components/Contacts";
 import Recommendations from "@/components/Recommendation";
 import RecentActivitiesPreview from "@/components/Sports/RecentActivitiesPreview";
+import SpotifyOverview from "@/components/Spotify/SpotifyOverview";
 
 // --- Static metadata (replaces react-helmet) ---
 // export const metadata: Metadata = {
@@ -42,6 +43,7 @@ export default function Home() {
             <Skills />
             <Projects colors={theme} />
             <Recommendations />
+            <SpotifyOverview />
             <RecentActivitiesPreview />
             <Contacts colors={theme} />
             {/* <Galaxy />
