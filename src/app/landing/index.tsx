@@ -11,6 +11,7 @@ import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import Contacts from "@/components/Contacts";
+import Recommendations from "@/components/Recommendation";
 import RecentActivitiesPreview from "@/components/Sports/RecentActivitiesPreview";
 
 // --- Static metadata (replaces react-helmet) ---
@@ -40,6 +41,7 @@ export default function Home() {
             <Education />
             <Skills />
             <Projects colors={theme} />
+            <Recommendations />
             <RecentActivitiesPreview />
             <Contacts colors={theme} />
             {/* <Galaxy />
