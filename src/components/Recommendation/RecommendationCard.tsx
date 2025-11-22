@@ -5,7 +5,7 @@ import type { Recommendation } from "./types";
 
 const PROFILE_URL = "https://www.linkedin.com/in/mohammad-ashif-cv/";
 
-const truncate = (str: string, max = 200) => {
+const truncate = (str: string, max = 270) => {
   if (!str) return "";
   if (str.length <= max) return str;
   return `${str.slice(0, max).trimEnd()}…`;
@@ -45,20 +45,17 @@ const RecommendationCard = ({ recommendation }: RecommendationCardProps) => {
 
       <p className="text-sm leading-relaxed text-slate-300">
         {truncatedText}
-        {isTruncated ? (
-          <>
-            {" "}
-            <Link
-              href={PROFILE_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="text-[#89d3ce] underline-offset-4 transition hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#89d3ce]"
-            >
-              Read more →
-            </Link>
-          </>
-        ) : null}
       </p>
+      {isTruncated ? (
+        <Link
+          href={PROFILE_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-2 inline-block text-sm text-[#89d3ce] underline-offset-4 transition hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#89d3ce]"
+        >
+          Read more →
+        </Link>
+      ) : null}
     </article>
   );
 };

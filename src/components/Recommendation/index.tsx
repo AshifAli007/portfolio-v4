@@ -23,13 +23,13 @@ const Recommendations = () => {
   };
 
   return (
-    <section aria-label="LinkedIn recommendations" className="max-w-6xl mx-auto px-4 md:px-6 py-16">
-      <div className="rounded-3xl border border-white/10 bg-black/30 p-8 shadow-xl backdrop-blur md:p-10">
+    <section aria-label="LinkedIn recommendations" className="max-w-6xl mx-auto px-4 md:px-6 py-8">
+      <div className="rounded-3xl border border-white/10 bg-black/30 p-4 shadow-xl backdrop-blur md:p-4">
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div className="space-y-2">
             <h2 className="text-3xl font-semibold tracking-tight">Recommendations</h2>
             <p className="text-sm text-white/60">
-              What teammates and collaborators say about partnering with me.
+              What teammates and collaborators say about me.
             </p>
           </div>
         </div>

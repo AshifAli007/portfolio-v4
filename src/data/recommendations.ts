@@ -3,17 +3,17 @@ import type { Recommendation } from "@/components/Recommendation/types";
 const recommendations: Recommendation[] = [
   {
     id: "rec-1",
-    authorName: "Priya Sharma",
-    authorTitle: "Product Manager at FinTech Labs",
+    authorName: "Jose Andres Arita",
+    authorTitle: "Jr Manufacturing Engineer, Powermatic Associates",
     avatarUrl: "https://avatars.githubusercontent.com/u/000000?v=4",
-    text: "Collaborating with Ashif on our analytics dashboard was a masterclass in thoughtful engineering. He translated vague product asks into elegant, performant components, and raised important edge cases before they became issues. He’s the teammate you want when timelines are tight but quality can’t slip.",
+    text: "I worked with Ashif on a project at Florida State. We had to build a real-time dashboard that pulled data from several sources and showed it in a clean web app. Ashif set up the whole stack AWS on the back end, React on the front end, and a smooth API in between. He broke down complex tasks into clear steps, shared quick updates, and always kept us on schedule. When the data feed broke two days before our demo, he traced the bug, patched the code, and redeployed in one evening. Ashif’s code is tidy, his problem-solving is fast, and he explains things in plain language. Working with him felt easy and steady. I’d team up with him again without hesitation.",
     sourceUrl: "https://www.linkedin.com/in/mohammad-ashif-cv/",
     date: "2024",
   },
   {
     id: "rec-2",
-    authorName: "Luis Fernandez",
-    authorTitle: "Senior Software Engineer, Cloud Platform",
+    authorName: "Asma Khanam",
+    authorTitle: "Senior Software Engineer",
     text: "Ashif combines deep frontend expertise with an instinct for user experience. He refactored our design system tokens to be themeable, reduced bundle size, and added accessibility wins in the process. His documentation made onboarding new contributors a breeze.",
     sourceUrl: "https://www.linkedin.com/in/mohammad-ashif-cv/",
     date: "2023",
