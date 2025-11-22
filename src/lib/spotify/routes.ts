@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import { mockFeatures, mockNowPlaying, mockPlaylist, mockTrack, mockTracks } from "@/data/spotify-mock";
 import { spotifyGet } from "./fetch";
-import { hasSpotifyEnv } from "./config";
+import { hasSpotifyClientCredentialsEnv, hasSpotifyEnv } from "./config";
 import { SpotifyAudioFeatures, SpotifyNowPlaying, SpotifyPlaylist, SpotifyTrack, SpotifyTrackAnalysis } from "./types";
 
 export async function respondWithSpotify<T>(endpoint: string, mock: T) {
   try {
-    if (!hasSpotifyEnv()) {
+    if (!hasSpotifyEnv() && !hasSpotifyClientCredentialsEnv()) {
       return NextResponse.json(mock, { status: 200 });
     }
     const data = await spotifyGet<T>(endpoint);

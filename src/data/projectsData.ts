@@ -95,7 +95,7 @@ export const projectsData: Project[] = [
     code: "https://github.com/AshifAli007/HackFSU-SPR24",
   },
   {
-    id: 9,
+    id: 10,
     projectName: "Particles",
     projectDesc:
       "Created using css and javascript. Move mouse to create enlarged particles around the mouse.",

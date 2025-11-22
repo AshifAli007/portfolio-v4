@@ -1,12 +1,8 @@
 import { SpotifyConfig } from "./types";
 
-const requiredVars = [
-  "SPOTIFY_CLIENT_ID",
-  "SPOTIFY_CLIENT_SECRET",
-  "SPOTIFY_REDIRECT_URI",
-  "SPOTIFY_PLAYLIST_IDS",
-  "ENCRYPTION_KEY",
-] as const;
+const clientCredentialVars = ["SPOTIFY_CLIENT_ID", "SPOTIFY_CLIENT_SECRET"] as const;
+
+const requiredVars = [...clientCredentialVars, "SPOTIFY_REDIRECT_URI", "SPOTIFY_PLAYLIST_IDS", "ENCRYPTION_KEY"] as const;
 
 type EnvKey = (typeof requiredVars)[number];
 
@@ -30,4 +26,15 @@ export function getSpotifyConfig(): SpotifyConfig {
 
 export function hasSpotifyEnv(): boolean {
   return requiredVars.every((key) => Boolean(process.env[key]));
+}
+
+export function hasSpotifyClientCredentialsEnv(): boolean {
+  return clientCredentialVars.every((key) => Boolean(process.env[key]));
+}
+
+export function getSpotifyClientCredentials(): Pick<SpotifyConfig, "clientId" | "clientSecret"> {
+  return {
+    clientId: readEnv("SPOTIFY_CLIENT_ID"),
+    clientSecret: readEnv("SPOTIFY_CLIENT_SECRET"),
+  };
 }
