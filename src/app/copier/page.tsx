@@ -6,6 +6,7 @@ import { useDropzone } from "react-dropzone";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { BsFileEarmarkText, BsFileEarmarkArrowDown } from "react-icons/bs";
 import { GiHummingbird } from "react-icons/gi";
+import { FiCopy } from "react-icons/fi";
 
 const WS_BASE = "wss://portfolio-backend-ldta.onrender.com";
 
@@ -16,6 +17,7 @@ export default function CopierPage() {
   const [textOut, setTextOut] = useState("");
   const [textIn, setTextIn] = useState("");
   const [fileIn, setFileIn] = useState<string>("");
+  const [copied, setCopied] = useState(false);
 
   // text socket
   const {
@@ -73,10 +75,26 @@ export default function CopierPage() {
 
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop });
 
+  useEffect(() => {
+    if (!copied) return;
+    const timer = setTimeout(() => setCopied(false), 1800);
+    return () => clearTimeout(timer);
+  }, [copied]);
+
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const val = e.target.value;
     setTextOut(val);
     sendTextMessage(val);
+  };
+
+  const handleCopy = async () => {
+    if (!textIn) return;
+    try {
+      await navigator.clipboard.writeText(textIn);
+      setCopied(true);
+    } catch (err) {
+      console.error("Failed to copy incoming text", err);
+    }
   };
 
   const dataOk =
@@ -91,18 +109,22 @@ export default function CopierPage() {
       {/* Text sync panel */}
       <div className="w-full max-w-5xl flex flex-col md:flex-row gap-4 md:gap-6 mb-8">
         <div className="relative flex-1 flex flex-col">
-          <label className="mb-2 font-semibold tracking-wide text-cyan-300">
+          <label
+            htmlFor="text-outgoing"
+            className="mb-2 font-semibold tracking-wide text-cyan-300"
+          >
             Outgoing (type to broadcast)
           </label>
-            <textarea
-              value={textOut}
-              onChange={handleTextChange}
-              rows={16}
-              data-gramm="false"
-              data-gramm_editor="false"
-              className="custom-scrollbar rounded-lg bg-black/50 border border-white/10 focus:border-cyan-400/60 focus:outline-none p-3 font-mono resize"
-              placeholder="Start typing..."
-            />
+          <textarea
+            id="text-outgoing"
+            value={textOut}
+            onChange={handleTextChange}
+            rows={16}
+            data-gramm="false"
+            data-gramm_editor="false"
+            className="custom-scrollbar rounded-lg bg-black/50 border border-white/10 focus:border-cyan-400/60 focus:outline-none p-3 font-mono resize"
+            placeholder="Start typing..."
+          />
           <GiHummingbird
             size={30}
             className="absolute top-8 right-2"
@@ -113,18 +135,36 @@ export default function CopierPage() {
         </div>
 
         <div className="relative flex-1 flex flex-col">
-          <label className="mb-2 font-semibold tracking-wide text-cyan-300">
+          <label
+            htmlFor="text-incoming"
+            className="mb-2 font-semibold tracking-wide text-cyan-300"
+          >
             Incoming (read-only)
           </label>
-          <textarea
-            value={textIn}
-            readOnly
-            rows={16}
-            data-gramm="false"
-            data-gramm_editor="false"
-            className="custom-scrollbar rounded-lg bg-black/30 border border-white/10 focus:border-cyan-400/60 focus:outline-none p-3 font-mono resize"
-            placeholder="Waiting for remote text..."
-          />
+          <div className="relative">
+            <textarea
+              id="text-incoming"
+              value={textIn}
+              readOnly
+              rows={16}
+              data-gramm="false"
+              data-gramm_editor="false"
+              className="custom-scrollbar w-full rounded-lg bg-black/30 border border-white/10 focus:border-cyan-400/60 focus:outline-none p-3 pr-24 font-mono resize"
+              placeholder="Waiting for remote text..."
+            />
+            <div className="pointer-events-none absolute inset-0 flex items-start justify-end">
+              <button
+                type="button"
+                onClick={handleCopy}
+                disabled={!textIn}
+                className="pointer-events-auto m-2 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-black/70 px-2 py-1 text-xs text-gray-200 shadow-md backdrop-blur transition hover:border-cyan-400/60 hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50"
+                aria-label="Copy incoming text"
+              >
+                <FiCopy size={15} />
+                {copied ? "Copied" : "Copy"}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
