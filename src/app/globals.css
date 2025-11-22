@@ -157,6 +157,29 @@ body::-webkit-scrollbar {
   height: 0 !important;
 }
 
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-animate {
+  animation: marquee 40s linear infinite;
+}
+
+.group:hover .marquee-animate {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-animate {
+    animation: none !important;
+  }
+}
+
 
 .pigeon-attribution {
   display: none;
