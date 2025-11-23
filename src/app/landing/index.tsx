@@ -43,8 +43,8 @@ export default function Home() {
             <Skills />
             <Projects colors={theme} />
             <Recommendations />
-            <SpotifyOverview />
             <RecentActivitiesPreview />
+            <SpotifyOverview />
             <Contacts colors={theme} />
             {/* <Galaxy />
         <About />

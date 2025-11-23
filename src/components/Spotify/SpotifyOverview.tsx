@@ -4,14 +4,38 @@ import AudioFeatureRadar from "./AudioFeatureRadar";
 import MoodBadge from "./MoodBadge";
 import NowPlayingCard from "./NowPlayingCard";
 import PlaylistSpotlight from "./PlaylistSpotlight";
-import { mockAudioFeaturesList } from "@/lib/spotify/routes";
+import { useSpotifyData } from "@/hooks/useSpotifyData";
+import { mockAudioFeatures, mockAudioFeaturesList, mockTopTracks } from "@/lib/spotify/routes";
 import { aggregateAudioFeatures, moodFromFeatures } from "@/lib/spotify/derive";
-import { mockTracks } from "@/data/spotify-mock";
+import { SpotifyAudioFeatures, SpotifyNowPlaying, SpotifyTrack } from "@/lib/spotify/types";
 
 export default function SpotifyOverview() {
-  const features = mockAudioFeaturesList();
-  const aggregate = aggregateAudioFeatures(features);
+  const { data: topTracks, isLoading: isLoadingTopTracks } = useSpotifyData<SpotifyTrack[]>(
+    "/api/spotify/top-tracks?time_range=short_term&limit=5",
+    { refreshInterval: 60_000 },
+  );
+  const { data: nowPlaying } = useSpotifyData<SpotifyNowPlaying>("/api/spotify/now-playing", {
+    refreshInterval: 10_000,
+  });
+  const trackId = nowPlaying?.item?.id;
+  const audioFeaturesEndpoint = trackId
+    ? `/api/spotify/audio-features/${trackId}`
+    : "/api/spotify/audio-features?current=true";
+  const { data: audioFeatureData, isLoading: isLoadingAudio } = useSpotifyData<
+    SpotifyAudioFeatures | SpotifyAudioFeatures[]
+  >(audioFeaturesEndpoint, { refreshInterval: 10_000 });
+
+  const featuresList = Array.isArray(audioFeatureData)
+    ? audioFeatureData
+    : audioFeatureData
+      ? [audioFeatureData]
+      : mockAudioFeaturesList();
+
+  const safeFeatures = featuresList.length ? featuresList : [mockAudioFeatures()];
+
+  const aggregate = aggregateAudioFeatures(safeFeatures);
   const mood = moodFromFeatures(aggregate.valence, aggregate.energy);
+  const tracks = (topTracks ?? mockTopTracks()).slice(0, 5);
 
   return (
     <section aria-label="Spotify overview" className="mt-16">
@@ -27,9 +51,12 @@ export default function SpotifyOverview() {
         <div className="mt-6 grid gap-6 md:grid-cols-[1.2fr_1fr]">
           <NowPlayingCard />
           <div className="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-4">
-            <h3 className="text-lg font-semibold text-white">Current favorites</h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-white">Current favorites</h3>
+              {isLoadingTopTracks && <span className="text-xs text-slate-400">Refreshing...</span>}
+            </div>
             <ul className="space-y-3">
-              {mockTracks.slice(0, 5).map((track) => (
+              {tracks.map((track) => (
                 <li key={track.id} className="flex items-center gap-3">
                   <img
                     src={track.album.images?.[0]?.url ?? "/placeholder.png"}
@@ -47,7 +74,14 @@ export default function SpotifyOverview() {
         </div>
         <div className="mt-6 grid gap-4 md:grid-cols-[1.2fr_1fr]">
           <PlaylistSpotlight />
-          <AudioFeatureRadar features={features} />
+          <div className="relative">
+            {isLoadingAudio && (
+              <span className="absolute right-4 top-3 text-xs text-slate-400" aria-live="polite">
+                Refreshing…
+              </span>
+            )}
+            <AudioFeatureRadar features={safeFeatures} />
+          </div>
         </div>
       </div>
     </section>

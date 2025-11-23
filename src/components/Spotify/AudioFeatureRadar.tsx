@@ -35,17 +35,23 @@ export default function AudioFeatureRadar({ features }: AudioFeatureRadarProps) 
           <polygon points={points} className="fill-[#89d3ce]/40 stroke-[#1DB954]" strokeWidth={1.5} />
           <circle cx="80" cy="80" r="60" className="fill-transparent stroke-white/10" />
         </svg>
-        <div className="space-y-1 text-sm text-slate-300">
+        <dl className="space-y-1 text-sm text-slate-300">
           {metrics.map((key) => (
             <div key={key} className="flex justify-between gap-4">
-              <span className="capitalize">{key}</span>
-              <span>{aggregated[key].toFixed(2)}</span>
+              <dt className="capitalize">{key}</dt>
+              <dd>{aggregated[key].toFixed(2)}</dd>
             </div>
           ))}
-        </div>
+          <div className="mt-2 flex justify-between gap-4 text-xs text-slate-400">
+            <dt>Tempo</dt>
+            <dd>{Math.round(aggregated.tempo)} BPM</dd>
+          </div>
+        </dl>
       </div>
       <p className="sr-only">
-        Audio features summary: {metrics.map((metric) => `${metric} ${aggregated[metric].toFixed(2)}`).join(", ")}.
+        Audio features summary:{" "}
+        {metrics.map((metric) => `${metric} ${aggregated[metric].toFixed(2)}`).join(", ")}; tempo{" "}
+        {Math.round(aggregated.tempo)} BPM.
       </p>
     </div>
   );

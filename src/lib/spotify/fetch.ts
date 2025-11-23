@@ -6,7 +6,7 @@ const API_BASE = "https://api.spotify.com/v1";
 const RETRY_LIMIT = 3;
 
 const DEFAULT_TTL: Record<string, number> = {
-  "/me/player/currently-playing": 20_000,
+  "/me/player/currently-playing": 10_000,
   "/me/top/tracks": 30_000,
   "/me/top/artists": 30_000,
   "/me/player/recently-played": 45_000,

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { mockFeatures, mockNowPlaying, mockPlaylist, mockTrack, mockTracks } from "@/data/spotify-mock";
 import { spotifyGet } from "./fetch";
 import { hasSpotifyClientCredentialsEnv, hasSpotifyEnv } from "./config";
-import { SpotifyAudioFeatures, SpotifyNowPlaying, SpotifyPlaylist, SpotifyTrack, SpotifyTrackAnalysis } from "./types";
+import { SpotifyArtist, SpotifyAudioFeatures, SpotifyNowPlaying, SpotifyPlaylist, SpotifyTrack, SpotifyTrackAnalysis } from "./types";
 
 export async function respondWithSpotify<T>(endpoint: string, mock: T) {
   try {
@@ -36,10 +36,10 @@ export function mockTopTracks(): SpotifyTrack[] {
   return mockTracks;
 }
 
-export function mockTopArtists() {
+export function mockTopArtists(): SpotifyArtist[] {
   return [
-    { id: "artist-1", name: "Lumen", images: [{ url: "/placeholder.png" }] },
-    { id: "artist-2", name: "Echoes", images: [{ url: "/placeholder.png" }] },
+    { id: "artist-1", name: "Lumen", images: [{ url: "/placeholder.png" }], genres: [] },
+    { id: "artist-2", name: "Echoes", images: [{ url: "/placeholder.png" }], genres: [] },
   ];
 }
 
