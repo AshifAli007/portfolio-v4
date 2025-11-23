@@ -66,8 +66,8 @@ export default function MonkeytypeSummary() {
   const view = data ?? fallback;
 
   return (
-    <section className="mt-12 mx-auto w-full max-w-3xl px-4 sm:px-6">
-      <div className="w-full rounded-2xl border border-white/10 bg-[#0c0f17]/90 p-4 shadow-lg backdrop-blur md:w-11/12 lg:w-10/12">
+    <section className="mt-12 mx-auto w-full max-w-4xl px-4 sm:px-6">
+      <div className="w-full rounded-2xl border border-white/10 bg-[#0c0f17]/90 p-4 shadow-lg backdrop-blur md:w-10/12 lg:w-9/12">
         <div className="flex items-center justify-between gap-3">
           <div>
             <p className="text-xs uppercase tracking-[0.2em]" style={{ color: accent }}>
@@ -90,16 +90,16 @@ export default function MonkeytypeSummary() {
           </a>
         </div>
 
-        <div className="mt-4 grid grid-cols-3 gap-3 text-center">
-          <Stat label="WPM" value={view.wpm} highlight />
-          <Stat label="Accuracy" value={`${view.accuracy.toFixed(0)}%`} />
-          <Stat label="Words" value={view.totalWords} />
+        <div className="mt-4 grid grid-cols-6 gap-3 text-center">
+          <Stat label="WPM" value={view.wpm} highlight className="col-span-2" />
+          <Stat label="Accuracy" value={`${view.accuracy.toFixed(0)}%`} className="col-span-2" />
+          <Stat label="Words" value={view.totalWords} className="col-span-2" />
         </div>
 
-        <div className="mt-3 grid grid-cols-3 gap-3 text-center">
-          <Stat label="Tests" value={view.testsCompleted} />
-          <Stat label="Streak" value={view.currentStreak} />
-          <Stat label="Keyboard" value={'Mac M2 pro'} />
+        <div className="mt-3 grid grid-cols-6 gap-3 text-center">
+          <Stat label="Tests" value={view.testsCompleted} className="col-span-2" />
+          <Stat label="Streak" value={view.currentStreak} className="col-span-1" />
+          <Stat label="Keyboard" value={"Mac M2 pro"} className="col-span-3" />
         </div>
 
         {error && <p className="mt-3 text-xs text-red-300">{error}</p>}
@@ -108,9 +108,19 @@ export default function MonkeytypeSummary() {
   );
 }
 
-function Stat({ label, value, highlight }: { label: string; value: number | string; highlight?: boolean }) {
+function Stat({
+  label,
+  value,
+  highlight,
+  className,
+}: {
+  label: string;
+  value: number | string;
+  highlight?: boolean;
+  className?: string;
+}) {
   return (
-    <div className="rounded-xl border border-white/5 bg-white/5 px-3 py-2">
+    <div className={`rounded-xl border border-white/5 bg-white/5 px-2.5 py-2 ${className ?? ""}`}>
       <p className="text-[0.5rem] uppercase tracking-wide text-slate-400">{label}</p>
       <p className="text-lg font-semibold text-white" style={highlight ? { color: accent } : undefined}>
         {value}
