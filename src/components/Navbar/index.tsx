@@ -2,6 +2,7 @@
 
 import React, { useRef } from "react";
 import { usePathname } from "next/navigation";
+import { FiGithub, FiLinkedin } from "react-icons/fi";
 
 type NavbarProps = {
   /** Override if your resume lives elsewhere. Put resume.pdf in /public for default. */
@@ -45,13 +46,32 @@ export default function Navbar({ resumeHref = "/resume.pdf" }: NavbarProps) {
             </h1>
           </a>
 
-          <h4
-            ref={positionRef}
-            className="text-white text-[0.75rem] uppercase tracking-[0.1em]"
-          >
+          <h4 ref={positionRef} className="text-white text-[0.75rem] uppercase tracking-[0.1em]">
             Software Engineer
           </h4>
         </div>
+      </div>
+
+      {/* Top-right social icons */}
+      <div className="absolute right-6 top-6 z-[100] flex flex-col items-center gap-2">
+        <a
+          href="https://github.com/AshifAli007"
+          target="_blank"
+          rel="noreferrer noopener"
+          aria-label="GitHub"
+          className="rounded-full border border-white/15 bg-white/5 p-2 text-white transition hover:border-white/40 hover:bg-white/10 hover:text-[#89d3ce]"
+        >
+          <FiGithub className="h-5 w-5" />
+        </a>
+        <a
+          href="https://www.linkedin.com/in/mohammad-ashif-cv/"
+          target="_blank"
+          rel="noreferrer noopener"
+          aria-label="LinkedIn"
+          className="rounded-full border border-white/15 bg-white/5 p-2 text-white transition hover:border-white/40 hover:bg-white/10 hover:text-[#89d3ce]"
+        >
+          <FiLinkedin className="h-5 w-5" />
+        </a>
       </div>
 
       {/* Left vertical links with animated line */}
