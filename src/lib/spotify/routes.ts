@@ -38,8 +38,8 @@ export function mockTopTracks(): SpotifyTrack[] {
 
 export function mockTopArtists(): SpotifyArtist[] {
   return [
-    { id: "artist-1", name: "Lumen", images: [{ url: "/placeholder.png" }], genres: [] },
-    { id: "artist-2", name: "Echoes", images: [{ url: "/placeholder.png" }], genres: [] },
+    { id: "artist-1", name: "Lumen", images: [{ url: "https://i.scdn.co/image/ab67616d0000b27305382cac18b598909ed39288" }], genres: [] },
+    { id: "artist-2", name: "Echoes", images: [{ url: "https://i.scdn.co/image/ab67616d0000b27305382cac18b598909ed39288" }], genres: [] },
   ];
 }
 

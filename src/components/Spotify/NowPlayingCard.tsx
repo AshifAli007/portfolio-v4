@@ -1,20 +1,75 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { useSpotifyData } from "@/hooks/useSpotifyData";
 import { mockNowPlaying } from "@/data/spotify-mock";
 import { SpotifyNowPlaying } from "@/lib/spotify/types";
 import { formatDuration } from "@/lib/spotify/derive";
 
+function formatAgo(timestamp: number): string {
+  const diffMs = Date.now() - timestamp;
+  const minutes = Math.floor(diffMs / 60000);
+  const hours = Math.floor(diffMs / (60 * 60000));
+  const days = Math.floor(diffMs / (24 * 60 * 60000));
+  if (minutes < 1) return "Just now";
+  if (minutes < 60) return `${minutes} minute${minutes === 1 ? "" : "s"} ago`;
+  if (hours < 24) return `${hours} hour${hours === 1 ? "" : "s"} ago`;
+  return `${days} day${days === 1 ? "" : "s"} ago`;
+}
+
 export default function NowPlayingCard() {
   const { data, isLoading } = useSpotifyData<SpotifyNowPlaying>("/api/spotify/now-playing", {
     refreshInterval: 20_000,
   });
+  const [lastPlayed, setLastPlayed] = useState<SpotifyNowPlaying | null>(null);
+  const [lastPlayedAt, setLastPlayedAt] = useState<number | null>(null);
 
-  const nowPlaying = data ?? mockNowPlaying;
-  const isLive = nowPlaying.is_playing && nowPlaying.item;
-  const item = nowPlaying.item ?? mockNowPlaying.item;
+  // Restore the last successful "now playing" from localStorage
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const stored = localStorage.getItem("portfolio:lastNowPlaying");
+    const storedAt = localStorage.getItem("portfolio:lastNowPlayingAt");
+    if (stored) {
+      try {
+        setLastPlayed(JSON.parse(stored) as SpotifyNowPlaying);
+        if (storedAt) {
+          const parsedAt = Number(storedAt);
+          if (!Number.isNaN(parsedAt)) {
+            setLastPlayedAt(parsedAt);
+          }
+        }
+      } catch {
+        /* ignore parse errors */
+      }
+    }
+  }, []);
+
+  // Persist the latest live track so we can show it when playback stops
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (data?.is_playing && data.item) {
+      setLastPlayed(data);
+      setLastPlayedAt(Date.now());
+      localStorage.setItem("portfolio:lastNowPlaying", JSON.stringify(data));
+      localStorage.setItem("portfolio:lastNowPlayingAt", String(Date.now()));
+    }
+  }, [data]);
+
+  const liveNowPlaying = data?.is_playing && data.item ? data : null;
+  const effectiveNowPlaying = liveNowPlaying ?? lastPlayed ?? data ?? mockNowPlaying;
+  const nowPlaying = effectiveNowPlaying;
+  const isLive = Boolean(liveNowPlaying);
+  const item = effectiveNowPlaying.item ?? mockNowPlaying.item;
+
+  const playedAgoMs = lastPlayedAt ? Date.now() - lastPlayedAt : null;
+  const lessThanTenMinutes = playedAgoMs !== null ? playedAgoMs < 1 * 60 * 1000 : false;
+  const playedLabel =
+    isLive || lessThanTenMinutes
+      ? "Recently played"
+      : lastPlayedAt
+        ? `Last played ${formatAgo(lastPlayedAt)}`
+        : "Recently played";
 
   const progressPercent = useMemo(() => {
     if (!nowPlaying.progress_ms || !item) return 0;
@@ -39,7 +94,7 @@ export default function NowPlayingCard() {
           <div className="h-16 w-16 rounded-xl bg-slate-800" aria-hidden />
         )}
         <div className="min-w-0">
-          <p className="text-sm text-slate-300">{isLive ? "Now playing" : "Recently played"}</p>
+          <p className="text-sm text-slate-300">{isLive ? "Now playing" : playedLabel}</p>
           <h3 className="truncate text-lg font-semibold text-white">{item?.name ?? "Unknown track"}</h3>
           <p className="truncate text-slate-400 text-sm">
             {item?.artists?.map((artist) => artist.name).join(", ") ?? "Unknown artist"}

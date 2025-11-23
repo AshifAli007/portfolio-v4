@@ -16,6 +16,9 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({
     receivedState: state,
     accessToken: token?.access_token ?? null,
+    refreshToken: token?.refresh_token ?? null,
     expiresIn: token?.expires_in ?? null,
+    instructions:
+      "Copy the refreshToken value into your environment as SPOTIFY_REFRESH_TOKEN to enable automatic access token refresh.",
   });
 }

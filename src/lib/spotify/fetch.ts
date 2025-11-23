@@ -27,7 +27,9 @@ async function withAuthFetch<T>(endpoint: string, accessToken?: string, attempt 
   }
   const cacheKey = `${endpoint}`;
   const cached = getCached<T>(cacheKey);
-  if (cached) return cached;
+  if (cached){
+    return cached;
+  } 
   console.log(`Fetching Spotify endpoint: ${endpoint}, attempt: ${attempt + 1}`);
   let token =
     accessToken ??
