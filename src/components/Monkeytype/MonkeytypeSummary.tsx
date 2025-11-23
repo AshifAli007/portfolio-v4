@@ -66,8 +66,8 @@ export default function MonkeytypeSummary() {
   const view = data ?? fallback;
 
   return (
-    <section className="mt-12 mx-auto w-full max-w-4xl px-4 sm:px-6">
-      <div className="w-full rounded-2xl border border-white/10 bg-[#0c0f17]/90 p-4 shadow-lg backdrop-blur md:w-10/12 lg:w-9/12">
+    <section className="mt-12 mx-auto w-full max-w-6xl">
+      <div className="w-full rounded-2xl border border-white/10 bg-[#0c0f17]/90 p-4 shadow-lg backdrop-blur md:w-8/12 lg:w-7/12">
         <div className="flex items-center justify-between gap-3">
           <div>
             <p className="text-xs uppercase tracking-[0.2em]" style={{ color: accent }}>

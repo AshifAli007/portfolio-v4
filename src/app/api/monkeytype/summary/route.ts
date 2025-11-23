@@ -44,13 +44,23 @@ export async function GET() {
     if (!lastRes.ok) throw new Error(`Monkeytype last request failed: ${lastRes.status}`);
     if (!profileRes.ok) throw new Error(`Monkeytype profile request failed: ${profileRes.status}`);
 
-    const lastBody = (await lastRes.json()) as any;
-    const profileBody = (await profileRes.json()) as any;
-    const last = lastBody?.data ?? lastBody ?? {};
-    const source = profileBody?.data ?? profileBody ?? {};
-    const stats = source.stats ?? source.data ?? source;
+    const lastBody = (await lastRes.json()) as unknown;
+    const profileBody = (await profileRes.json()) as unknown;
+    const toRecord = (val: unknown): Record<string, unknown> | null =>
+      val && typeof val === "object" ? (val as Record<string, unknown>) : null;
 
-    const normalizeTimestamp = (ts: any): string => {
+    const lastRecord = toRecord(lastBody);
+    const last = toRecord(lastRecord?.data) ?? lastRecord ?? {};
+
+    const profileRecord = toRecord(profileBody);
+    const source = toRecord(profileRecord?.data) ?? profileRecord ?? {};
+    const stats = toRecord(source?.stats) ?? toRecord(source?.data) ?? source;
+    const alltime = toRecord(stats?.alltime) ?? null;
+    const streakObj = toRecord(stats?.streak) ?? null;
+    const settingsObj = toRecord(stats?.settings) ?? null;
+    const statsLast = toRecord(stats?.last) ?? null;
+
+    const normalizeTimestamp = (ts: unknown): string => {
       if (!ts && ts !== 0) return mockSummary.timestamp;
       const num = Number(ts);
       if (Number.isNaN(num)) return mockSummary.timestamp;
@@ -59,31 +69,37 @@ export async function GET() {
     };
 
     const mapped: MonkeytypeSummary = {
-      wpm: last.wpm ?? last.speed ?? mockSummary.wpm,
-      accuracy: last.acc ?? last.accuracy ?? mockSummary.accuracy,
+      wpm: (last.wpm as number) ?? (last.speed as number) ?? mockSummary.wpm,
+      accuracy: (last.acc as number) ?? (last.accuracy as number) ?? mockSummary.accuracy,
       totalWords:
-        source.totalWords ??
-        stats?.totalWords ??
-        stats?.typed ??
-        stats?.words ??
-        stats?.alltime?.words ??
+        (source?.totalWords as number) ??
+        (stats?.totalWords as number) ??
+        (stats?.typed as number) ??
+        (stats?.words as number) ??
+        (alltime?.words as number) ??
         mockSummary.totalWords,
       testsCompleted:
-        source.testsCompleted ??
-        stats?.testsCompleted ??
-        stats?.tests ??
-        stats?.alltime?.tests ??
+        (source?.testsCompleted as number) ??
+        (stats?.testsCompleted as number) ??
+        (stats?.tests as number) ??
+        (alltime?.tests as number) ??
         mockSummary.testsCompleted,
       currentStreak:
-        source.currentStreak ??
-        stats?.currentStreak ??
-        stats?.streak ??
-        stats?.streak?.current ??
+        (source?.currentStreak as number) ??
+        (stats?.currentStreak as number) ??
+        (stats?.streak as number) ??
+        (streakObj?.current as number) ??
         mockSummary.currentStreak,
-      keyboard: source.keyboard ?? stats?.keyboard ?? stats?.settings?.keyboard ?? mockSummary.keyboard,
-      mode: last.mode ? `${last.mode} ${last.mode2 ?? ""}`.trim() : mockSummary.mode,
-      language: last.language ?? mockSummary.language,
-      timestamp: normalizeTimestamp(last.timestamp ?? last.time ?? stats?.last?.timestamp),
+      keyboard:
+        (source?.keyboard as string) ??
+        (stats?.keyboard as string) ??
+        (settingsObj?.keyboard as string) ??
+        mockSummary.keyboard,
+      mode: last.mode ? `${last.mode as string} ${(last.mode2 as string) ?? ""}`.trim() : mockSummary.mode,
+      language: (last.language as string) ?? mockSummary.language,
+      timestamp: normalizeTimestamp(
+        (last.timestamp as unknown) ?? (last.time as unknown) ?? (statsLast?.timestamp as unknown) ?? (statsLast?.time as unknown),
+      ),
       raw: { last, profile: source },
     };
     return NextResponse.json(mapped, { status: 200 });
