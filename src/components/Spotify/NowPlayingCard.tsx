@@ -82,21 +82,21 @@ export default function NowPlayingCard() {
   }, [progressPercent]);
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#0c0f17]/80 p-4" aria-live="polite">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+    <div className="rounded-2xl border border-white/10 bg-[#0c0f17]/80 p-3 sm:p-4" aria-live="polite">
+      <div className="flex items-start gap-3">
         {item?.album?.images?.[0]?.url ? (
           <img
             src={item.album.images[0].url}
             alt={`Album art for ${item.name}`}
-            className="h-16 w-16 flex-shrink-0 rounded-xl object-cover"
+            className="h-14 w-14 flex-shrink-0 rounded-xl object-cover sm:h-16 sm:w-16"
           />
         ) : (
           <div className="h-16 w-16 rounded-xl bg-slate-800" aria-hidden />
         )}
         <div className="min-w-0 flex-1">
-          <p className="text-sm text-slate-300">{isLive ? "Now playing" : playedLabel}</p>
-          <h3 className="truncate text-lg font-semibold text-white">{item?.name ?? "Unknown track"}</h3>
-          <p className="truncate text-slate-400 text-sm">
+          <p className="text-xs text-slate-300 sm:text-sm">{isLive ? "Now playing" : playedLabel}</p>
+          <h3 className="truncate text-base font-semibold text-white sm:text-lg">{item?.name ?? "Unknown track"}</h3>
+          <p className="truncate text-slate-400 text-xs sm:text-sm">
             {item?.artists?.map((artist) => artist.name).join(", ") ?? "Unknown artist"}
           </p>
         </div>
