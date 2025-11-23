@@ -239,6 +239,12 @@ export default function RecentActivitiesPreview() {
             >
               Explore Sports
             </Link>
+            <Link
+              href="/activities"
+              className="rounded-full border border-white/20 px-5 py-2 text-sm font-medium uppercase tracking-wider text-white transition hover:border-white hover:bg-white/10"
+            >
+              All Activities
+            </Link>
           </div>
         </div>
 

@@ -24,6 +24,7 @@ const METERS_TO_FEET = 3.28084;
 const METERS_TO_MILES = KM_TO_MILES / 1000;
 
 const CACHE_KEY = "strava:overview";
+const ACTIVITIES_CACHE_KEY = "strava:activities";
 const STRAVA_ACTIVITIES_ENDPOINT = "/athlete/activities";
 const STRAVA_CLUBS_ENDPOINT = "/athlete/clubs";
 
@@ -77,6 +78,28 @@ const normalizeActivity = (activity: StravaActivity): NormalizedActivity => {
     externalUrl: `https://www.strava.com/activities/${activity.id}`,
     calories: activity.calories,
   };
+};
+
+export const getStravaActivities = async (options?: { forceRefresh?: boolean }): Promise<NormalizedActivity[]> => {
+  if (!isStravaConfigured) {
+    throw new Error(
+      "Strava credentials are not configured. Provide STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET, and STRAVA_REFRESH_TOKEN.",
+    );
+  }
+
+  if (!options?.forceRefresh) {
+    const cached = getCachedValue<NormalizedActivity[]>(ACTIVITIES_CACHE_KEY);
+    if (cached) return cached;
+  } else {
+    clearCachedValue(ACTIVITIES_CACHE_KEY);
+  }
+
+  const fetchContext: FetchContext = {};
+  const activitiesRaw = await listActivities(fetchContext);
+  const normalizedActivities = activitiesRaw.map(normalizeActivity);
+
+  setCachedValue(ACTIVITIES_CACHE_KEY, normalizedActivities, stravaConfig.cacheTtlMs);
+  return normalizedActivities;
 };
 
 const computeWeeklyTrends = (activities: NormalizedActivity[]): ActivityTrendPoint[] => {

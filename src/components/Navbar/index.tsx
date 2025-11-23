@@ -13,7 +13,8 @@ export default function Navbar({ resumeHref = "/resume.pdf" }: NavbarProps) {
   const nameRef = useRef<HTMLHeadingElement | null>(null);
   const positionRef = useRef<HTMLHeadingElement | null>(null);
   const pathname = usePathname();
-  const showSideNav = !pathname?.startsWith("/sports");
+  
+  const showSideNav = pathname === "/";
 
   const handleScrollToAbout: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.preventDefault();
