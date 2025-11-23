@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { useSpotifyData } from "@/hooks/useSpotifyData";
 import { mockNowPlaying } from "@/data/spotify-mock";
-import { SpotifyNowPlaying } from "@/lib/spotify/types";
+import { SpotifyNowPlaying, SpotifyTrack } from "@/lib/spotify/types";
 import { formatDuration } from "@/lib/spotify/derive";
 
 function formatAgo(timestamp: number): string {
@@ -22,6 +22,9 @@ export default function NowPlayingCard() {
   const { data, isLoading } = useSpotifyData<SpotifyNowPlaying>("/api/spotify/now-playing", {
     refreshInterval: 20_000,
   });
+  const { data: recent } = useSpotifyData<{ items: { track: SpotifyTrack; played_at: string }[] }>(
+    "/api/spotify/recently-played",
+  );
   const [lastPlayed, setLastPlayed] = useState<SpotifyNowPlaying | null>(null);
   const [lastPlayedAt, setLastPlayedAt] = useState<number | null>(null);
 
@@ -57,7 +60,11 @@ export default function NowPlayingCard() {
   }, [data]);
 
   const liveNowPlaying = data?.is_playing && data.item ? data : null;
-  const effectiveNowPlaying = liveNowPlaying ?? lastPlayed ?? data ?? mockNowPlaying;
+  const recentFallbackTrack = recent?.items?.[0]?.track;
+  const recentNowPlaying: SpotifyNowPlaying | null = recentFallbackTrack
+    ? { is_playing: false, item: recentFallbackTrack }
+    : null;
+  const effectiveNowPlaying = liveNowPlaying ?? lastPlayed ?? recentNowPlaying ?? data ?? mockNowPlaying;
   const nowPlaying = effectiveNowPlaying;
   const isLive = Boolean(liveNowPlaying);
   const item = effectiveNowPlaying.item ?? mockNowPlaying.item;
