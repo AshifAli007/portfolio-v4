@@ -29,6 +29,7 @@ const emailOk = (e: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.trim());
 export default function Contacts({ id = "contacts", colors }: Props) {
     const [open, setOpen] = useState(false);
     const [errMsg, setErrMsg] = useState("");
+    const [hoverPos, setHoverPos] = useState(50);
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -125,6 +126,25 @@ export default function Contacts({ id = "contacts", colors }: Props) {
                     <p className="text-[0.78rem] text-gray-400">{"Let's "} <span className="text-link">create</span> something together</p>
                 </h1>
 
+                <div
+                    className="mb-8 rounded-2xl border border-white/10 bg-white/5 p-4 text-center text-lg font-semibold text-white shadow-lg backdrop-blur"
+                    onMouseMove={(e) => {
+                        const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
+                        const x = ((e.clientX - rect.left) / rect.width) * 100;
+                        setHoverPos(Math.max(0, Math.min(100, x)));
+                    }}
+                    onMouseLeave={() => setHoverPos(50)}
+                    style={{
+                        background: `linear-gradient(90deg, rgba(137,211,206,0.15) ${hoverPos - 20}%, ${colors.primary} ${hoverPos}%, rgba(137,211,206,0.15) ${hoverPos + 20}%)`,
+                        color: "transparent",
+                        WebkitBackgroundClip: "text",
+                        backgroundClip: "text",
+                        transition: "background-position 200ms ease",
+                    }}
+                >
+                    “Love is the one thing that transcends time and space.”
+                    <div className="mt-1 text-xs text-slate-400">— Interstellar</div>
+                </div>
 
                 <div className="flex flex-col lg:flex-row items-start gap-8">
                     {/* Form */}
