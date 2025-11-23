@@ -127,15 +127,9 @@ export default function Contacts({ id = "contacts", colors }: Props) {
                 </h1>
 
                 <div
-                    className="mb-8 rounded-2xl border border-white/10 bg-white/5 p-4 text-center text-lg font-semibold text-white shadow-lg backdrop-blur"
-                    onMouseMove={(e) => {
-                        const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
-                        const x = ((e.clientX - rect.left) / rect.width) * 100;
-                        setHoverPos(Math.max(0, Math.min(100, x)));
-                    }}
-                    onMouseLeave={() => setHoverPos(50)}
+                    className="mb-8 block w-fit ml-auto rounded-2xl bg-white/5 p-4 text-right text-lg font-semibold text-white shadow-lg backdrop-blur"
                     style={{
-                        background: `linear-gradient(90deg, rgba(137,211,206,0.15) ${hoverPos - 20}%, ${colors.primary} ${hoverPos}%, rgba(137,211,206,0.15) ${hoverPos + 20}%)`,
+                        background: `linear-gradient(90deg, rgba(137,211,206,0.15) ${hoverPos - 50}%, ${colors.primary} ${hoverPos}%, rgba(137,211,206,0.15) ${hoverPos + 20}%)`,
                         color: "transparent",
                         WebkitBackgroundClip: "text",
                         backgroundClip: "text",
