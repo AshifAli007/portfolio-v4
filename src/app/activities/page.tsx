@@ -9,7 +9,7 @@ export const metadata = {
 
 export default async function ActivitiesPage() {
   const activities = await getStravaActivities().catch(() => []);
-
+  
   return (
     <>
       <Navbar />

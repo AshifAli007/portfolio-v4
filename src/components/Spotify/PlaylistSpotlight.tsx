@@ -17,18 +17,18 @@ export default function PlaylistSpotlight({ playlistIds }: PlaylistSpotlightProp
 
   return (
     <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <h3 className="text-lg font-semibold text-white">Playlist Spotlight</h3>
-        <span className="rounded-full bg-white/5 px-2 py-1 text-xs text-[#1DB954]">Spotify</span>
+        <span className="self-start rounded-full bg-white/5 px-2 py-1 text-xs text-[#1DB954] sm:self-auto">Spotify</span>
       </div>
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
+      <div className="mt-4 grid gap-4 sm:grid-cols-2">
         {playlists.map((playlist) => {
           const cover = playlist.images?.[0]?.url ?? "/placeholder.png";
           const stripe = dominantColorFromImage(cover);
           return (
             <article key={playlist.id} className="rounded-xl border border-white/5 bg-white/5 p-3 hover:bg-white/10">
               <div className="flex gap-3">
-                <img src={cover} alt={`Cover of ${playlist.name}`} className="h-16 w-16 rounded-xl object-cover" />
+                <img src={cover} alt={`Cover of ${playlist.name}`} className="h-16 w-16 flex-shrink-0 rounded-xl object-cover" />
                 <div className="min-w-0">
                   <p className="text-sm font-semibold text-white">{playlist.name}</p>
                   <p className="text-xs text-slate-400">{playlist.description ?? "Curated vibes"}</p>
