@@ -16,7 +16,7 @@ export default function PlaylistSpotlight({ playlistIds }: PlaylistSpotlightProp
   const playlists = Array.isArray(data) ? data : data ? [data] : mockPlaylistList();
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
+    <div className="rounded-2xl border border-white/10 bg-[#0c0f17]/80 p-4">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <h3 className="text-lg font-semibold text-white">Playlist Spotlight</h3>
         <span className="self-start rounded-full bg-white/5 px-2 py-1 text-xs text-[#1DB954] sm:self-auto">Spotify</span>

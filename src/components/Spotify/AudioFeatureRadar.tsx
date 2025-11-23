@@ -28,7 +28,7 @@ export default function AudioFeatureRadar({ features }: AudioFeatureRadarProps) 
     .join(" ");
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
+    <div className="rounded-2xl border border-white/10 bg-[#0c0f17]/80 p-4">
       <h3 className="text-lg font-semibold text-white">Audio Profile</h3>
       <div className="mt-4 flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:gap-4">
         <svg viewBox="0 0 160 160" role="img" aria-label="Radar chart of audio features" className="h-48 w-48">

@@ -39,19 +39,19 @@ export default function SpotifyOverview() {
 
   return (
     <section aria-label="Spotify overview" className="mt-16">
-      <div className="mx-auto max-w-6xl rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur">
+      <div className="mx-auto max-w-6xl rounded-3xl border border-white/10 bg-[#0c0f17]/90 p-6 shadow-xl backdrop-blur">
         <div className="flex items-center justify-between gap-4">
           <div>
             <p className="text-sm uppercase tracking-wide text-[#89d3ce]">Music</p>
-            <h2 className="text-2xl font-bold text-white">What I&apos;m Listening To</h2>
+            <h2 className="text-2xl font-bold text-[#1DB954]">What I&apos;m Listening To</h2>
             <p className="text-slate-300">Live snapshot of my current soundtrack and mood.</p>
           </div>
           <MoodBadge mood={mood} />
         </div>
         <div className="mt-6 grid gap-6 md:grid-cols-[1.2fr_1fr]">
           <NowPlayingCard />
-          <div className="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-4">
-            <div className="flex items-center justify-between">
+          <div className="space-y-4 rounded-2xl border border-white/10 bg-[#0c0f17]/80 p-4">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <h3 className="text-lg font-semibold text-white">Current favorites</h3>
               {isLoadingTopTracks && <span className="text-xs text-slate-400">Refreshing...</span>}
             </div>
@@ -61,7 +61,7 @@ export default function SpotifyOverview() {
                   <img
                     src={track.album.images?.[0]?.url ?? "/placeholder.png"}
                     alt={`Album art for ${track.name}`}
-                    className="h-10 w-10 rounded-lg object-cover"
+                    className="h-10 w-10 flex-shrink-0 rounded-lg object-cover"
                   />
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium text-white">{track.name}</p>

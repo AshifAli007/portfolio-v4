@@ -82,18 +82,18 @@ export default function NowPlayingCard() {
   }, [progressPercent]);
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm hover:bg-white/[0.06]" aria-live="polite">
-      <div className="flex items-center gap-3">
+    <div className="rounded-2xl border border-white/10 bg-[#0c0f17]/80 p-4" aria-live="polite">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         {item?.album?.images?.[0]?.url ? (
           <img
             src={item.album.images[0].url}
             alt={`Album art for ${item.name}`}
-            className="h-16 w-16 rounded-xl object-cover"
+            className="h-16 w-16 flex-shrink-0 rounded-xl object-cover"
           />
         ) : (
           <div className="h-16 w-16 rounded-xl bg-slate-800" aria-hidden />
         )}
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <p className="text-sm text-slate-300">{isLive ? "Now playing" : playedLabel}</p>
           <h3 className="truncate text-lg font-semibold text-white">{item?.name ?? "Unknown track"}</h3>
           <p className="truncate text-slate-400 text-sm">
@@ -106,7 +106,7 @@ export default function NowPlayingCard() {
             aria-label="Open in Spotify"
             target="_blank"
             rel="noreferrer"
-            className="ml-auto text-[#1DB954] transition hover:text-[#89d3ce] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#89d3ce]"
+            className="ml-0 text-[#1DB954] transition hover:text-[#89d3ce] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#89d3ce] sm:ml-auto"
           >
             <FaExternalLinkAlt />
           </a>
