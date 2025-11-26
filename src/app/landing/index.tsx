@@ -15,6 +15,7 @@ import Recommendations from "@/components/Recommendation";
 import RecentActivitiesPreview from "@/components/Sports/RecentActivitiesPreview";
 import SpotifyOverview from "@/components/Spotify/SpotifyOverview";
 import MonkeytypeSummary from "@/components/Monkeytype/MonkeytypeSummary";
+import BuyMeCoffee from "@/components/Support/BuyMeCoffee";
 
 // --- Static metadata (replaces react-helmet) ---
 // export const metadata: Metadata = {
@@ -47,6 +48,7 @@ export default function Home() {
             <RecentActivitiesPreview />
             <SpotifyOverview />
             <MonkeytypeSummary />
+            <BuyMeCoffee colors={theme} />
             <Contacts colors={theme} />
             {/* <Galaxy />
         <About />
