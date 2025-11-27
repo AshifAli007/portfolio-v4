@@ -47,8 +47,12 @@ export default function Home() {
             <Recommendations />
             <RecentActivitiesPreview />
             <SpotifyOverview />
-            <MonkeytypeSummary />
-            <BuyMeCoffee colors={theme} />
+            <section className="mt-12 px-4 md:px-8">
+                <div className="mx-auto grid max-w-6xl gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(260px,0.9fr)]">
+                    <MonkeytypeSummary className="mt-0" fullWidth />
+                    <BuyMeCoffee colors={theme} />
+                </div>
+            </section>
             <Contacts colors={theme} />
             {/* <Galaxy />
         <About />

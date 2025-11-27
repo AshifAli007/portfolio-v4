@@ -31,7 +31,13 @@ const formatAgo = (iso: string) => {
   return `${days} day${days === 1 ? "" : "s"} ago`;
 };
 
-export default function MonkeytypeSummary() {
+export default function MonkeytypeSummary({
+  className = "mt-12",
+  fullWidth = false,
+}: {
+  className?: string;
+  fullWidth?: boolean;
+}) {
   const [data, setData] = useState<MonkeytypeSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -66,8 +72,13 @@ export default function MonkeytypeSummary() {
   const view = data ?? fallback;
 
   return (
-    <section className="mt-12 mx-auto w-full max-w-6xl">
-      <div className="w-full rounded-2xl border border-white/10 bg-[#0c0f17]/90 p-4 shadow-lg backdrop-blur md:w-8/12 lg:w-7/12">
+    <section className={`mx-auto w-full ${fullWidth ? "" : "max-w-6xl"} ${className}`}>
+      <div
+        className={[
+          "w-full rounded-2xl border border-white/10 bg-[#0c0f17]/90 p-4 shadow-lg backdrop-blur",
+          fullWidth ? "" : "md:w-8/12 lg:w-7/12",
+        ].join(" ")}
+      >
         <div className="flex items-center justify-between gap-3">
           <div>
             <p className="text-xs uppercase tracking-[0.2em]" style={{ color: accent }}>
