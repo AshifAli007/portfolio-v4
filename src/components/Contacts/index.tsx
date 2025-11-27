@@ -27,56 +27,58 @@ type Props = {
 const emailOk = (e: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.trim());
 
 export default function Contacts({ id = "contacts", colors }: Props) {
-    const [open, setOpen] = useState(false);
-    const [errMsg, setErrMsg] = useState("");
+    const [toastOpen, setToastOpen] = useState(false);
+    const [toastMsg, setToastMsg] = useState("");
     const [hoverPos, setHoverPos] = useState(50);
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
     const [success, setSuccess] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
-        if (!open) return;
-        const t = setTimeout(() => setOpen(false), 4000);
+        if (!toastOpen) return;
+        const t = setTimeout(() => setToastOpen(false), 3000);
         return () => clearTimeout(t);
-    }, [open]);
+    }, [toastOpen]);
 
     async function handleContactForm(e: React.FormEvent) {
         e.preventDefault();
         if (!name.trim() || !email.trim() || !message.trim()) {
-            setErrMsg("Enter all the fields");
-            setOpen(true);
+            setToastMsg("Enter all the fields");
+            setToastOpen(true);
             return;
         }
         if (!emailOk(email)) {
-            setErrMsg("Invalid email");
-            setOpen(true);
+            setToastMsg("Invalid email");
+            setToastOpen(true);
             return;
         }
 
-        if (contactsData.sheetAPI) {
-            try {
-                await fetch(contactsData.sheetAPI, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ name, email, message }),
-                });
-                setSuccess(true);
-                setErrMsg("");
-                setName("");
-                setEmail("");
-                setMessage("");
-            } catch {
-                setErrMsg("Failed to send. Please try again later.");
-                setOpen(true);
+        setIsSubmitting(true);
+        setSuccess(false);
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, message }),
+            });
+            const data = (await res.json().catch(() => null)) as { error?: string } | null;
+            if (!res.ok) {
+                throw new Error(data?.error ?? "Failed to send. Please try again later.");
             }
-        } else {
             setSuccess(true);
-            setErrMsg("");
+            setToastMsg("Message sent! Thanks for reaching out. Please check your inbox (and spam folder) for a confirmation email.");
+            setToastOpen(true);
             setName("");
             setEmail("");
             setMessage("");
+        } catch (error) {
+            setToastMsg((error as Error)?.message ?? "Failed to send. Please try again later.");
+            setToastOpen(true);
+        } finally {
+            setIsSubmitting(false);
         }
     }
 
@@ -107,13 +109,17 @@ export default function Contacts({ id = "contacts", colors }: Props) {
         // }}
         >
             {/* Toast */}
-            {open && (
+            {toastOpen && (
                 <div
-                    className="fixed top-4 left-1/2 z-[200] -translate-x-1/2 rounded-md px-3 py-1.5 shadow text-[0.78rem]"
-                    style={{ backgroundColor: colors.primary, color: colors.secondary }}
-                    role="alert"
+                    className="fixed top-4 left-1/2 z-[200] -translate-x-1/2 rounded-md px-3 py-2 shadow text-[0.78rem] backdrop-blur transition-transform animate-[fadeSlide_300ms_ease]"
+                    style={{
+                        backgroundColor: colors.primary,
+                        color: colors.secondary,
+                    }}
+                    role="status"
+                    aria-live="polite"
                 >
-                    {errMsg}
+                    {toastMsg}
                 </div>
             )}
 
@@ -221,8 +227,11 @@ export default function Contacts({ id = "contacts", colors }: Props) {
                                         color: colors.secondary,
                                     }}
                                     onMouseDown={() => setSuccess(false)}
+                                    disabled={isSubmitting}
                                 >
-                                    <p className="text-[0.78rem]">{!success ? "Send" : "Sent"}</p>
+                                    <p className="text-[0.78rem]">
+                                        {isSubmitting ? "Sending" : !success ? "Send" : "Sent"}
+                                    </p>
                                     <div className="grid place-items-center p-1">
                                         <AiOutlineSend
                                             className="send-icon"
@@ -335,6 +344,10 @@ export default function Contacts({ id = "contacts", colors }: Props) {
           20% { transform: translateX(-8px); }
           70% { transform: translateX(46px); }
           100% { transform: translateX(62px); }
+        }
+        @keyframes fadeSlide {
+          from { opacity: 0; transform: translate(-50%, -8px); }
+          to { opacity: 1; transform: translate(-50%, 0); }
         }
       `}</style>
         </section>
