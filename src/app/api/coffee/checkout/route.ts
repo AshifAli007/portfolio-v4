@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 const baseLink =
   process.env.STRIPE_COFFEE_LINK ??
   process.env.STRIPE_PAYMENT_LINK ??
-  "https://buy.stripe.com/3cI7sLdeQc3x7dy6Gg6kg00";
+  "https://checkout.ashifdesigns.com/b/3cI7sLdeQc3x7dy6Gg6kg00";
 
 export const dynamic = "force-dynamic";
 
