@@ -5,6 +5,7 @@ import "./globals.css";
 import MouseVars from "./MouseVars";
 import CustomCursor from "@/components/CustomCursor";
 import AnalyticsTracker from "@/components/Analytics/Tracker";
+import { Suspense } from "react";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -24,7 +25,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <MouseVars />
         <CustomCursor />
-        <AnalyticsTracker />
+        <Suspense fallback={null}>
+          <AnalyticsTracker />
+        </Suspense>
         {children}
       </body>
     </html>
