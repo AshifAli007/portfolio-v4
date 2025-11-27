@@ -49,51 +49,30 @@ export async function fetchAnalyticsSummary(): Promise<AnalyticsSummary> {
   const supabase = getSupabaseServerClient();
   if (!supabase) return mockSummary;
 
-  const [
-    totalVisits,
-    coffeeClicks,
-    emailsSent,
-    pageCountsRes,
-    projectCountsRes,
-    projectClicksCount,
-  ] = await Promise.all([
+  const [totalVisits, coffeeClicks, emailsSent, projectClicksCount] = await Promise.all([
     countByType("page_view"),
     countByType("coffee_click"),
     countByType("contact_submit"),
-    supabase
-      .from("analytics_events")
-      .select("page, count:count()")
-      .eq("event_type", "page_view")
-      .not("page", "is", null)
-      .group("page")
-      .order("count", { ascending: false }),
-    supabase
-      .from("analytics_events")
-      .select("target, count:count()")
-      .eq("event_type", "project_click")
-      .not("target", "is", null)
-      .group("target")
-      .order("count", { ascending: false }),
     countByType("project_click"),
   ]);
 
-  if (pageCountsRes.error) throw pageCountsRes.error;
-  if (projectCountsRes.error) throw projectCountsRes.error;
+  const pageCounts = await fetchGroupedCounts("page_view", "page");
+  const projectCounts = await fetchGroupedCounts("project_click", "target");
 
-  const pageCounts = pageCountsRes.data ?? [];
-  const projectCounts = projectCountsRes.data ?? [];
+  const mostVisitedPage = pageCounts[0] ? { page: pageCounts[0].label, count: pageCounts[0].count } : null;
+  const mostClickedProject = projectCounts[0]
+    ? { target: projectCounts[0].label, count: projectCounts[0].count }
+    : null;
 
   return {
     totalVisits,
     coffeeClicks,
     emailsSent,
     totalProjectClicks: projectClicksCount,
-    mostVisitedPage: pageCounts[0] ? { page: pageCounts[0].page, count: pageCounts[0].count } : null,
-    mostClickedProject: projectCounts[0]
-      ? { target: projectCounts[0].target, count: projectCounts[0].count }
-      : null,
-    pageCounts: pageCounts.map((row) => ({ page: row.page, count: row.count })),
-    projectCounts: projectCounts.map((row) => ({ target: row.target, count: row.count })),
+    mostVisitedPage,
+    mostClickedProject,
+    pageCounts: pageCounts.map((row) => ({ page: row.label, count: row.count })),
+    projectCounts: projectCounts.map((row) => ({ target: row.label, count: row.count })),
   };
 }
 
@@ -106,4 +85,32 @@ async function countByType(eventType: EventType): Promise<number> {
     .eq("event_type", eventType);
   if (error) throw error;
   return count ?? 0;
+}
+
+async function fetchGroupedCounts(
+  eventType: EventType,
+  field: "page" | "target",
+): Promise<{ label: string; count: number }[]> {
+  const supabase = getSupabaseServerClient();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from("analytics_events")
+    .select(field)
+    .eq("event_type", eventType)
+    .not(field, "is", null);
+
+  if (error) throw error;
+  if (!Array.isArray(data)) return [];
+
+  const counts = data.reduce<Map<string, number>>((map, row) => {
+    const key = (row as Record<string, string | null>)[field];
+    if (!key) return map;
+    map.set(key, (map.get(key) ?? 0) + 1);
+    return map;
+  }, new Map());
+
+  return Array.from(counts.entries())
+    .map(([label, count]) => ({ label, count }))
+    .sort((a, b) => b.count - a.count);
 }
