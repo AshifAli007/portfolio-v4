@@ -39,6 +39,19 @@ export default function Projects({
   colors,
   title = "Projects",
 }: ProjectsProps) {
+  const logProjectClick = (projectName: string, url?: string) => {
+    void fetch("/api/analytics/track", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event: "project_click",
+        target: projectName,
+        meta: url ? { url } : undefined,
+      }),
+      keepalive: true,
+    }).catch(() => {});
+  };
+
   // Mark which cards should be wide (horizontal layout) vs tall (vertical layout with extra height)
   const featuredWide = new Set<number>([1, 4, 8]); // wide (xl:col-span-2)
   const featuredTall = new Set<number>([2]); // tall (row-span-2)
@@ -84,6 +97,7 @@ export default function Projects({
                 <ProjectCard
                   project={project}
                   layout={layout}
+                  onClick={(url) => logProjectClick(project.projectName, url)}
                   colors={{
                     primary: colors.primary,
                     secondary: colors.secondary,
@@ -107,10 +121,12 @@ function ProjectCard({
   project,
   colors,
   layout = "vertical",
+  onClick,
 }: {
   project: Project;
   colors: CardTheme;
   layout?: "horizontal" | "vertical";
+  onClick?: (url?: string) => void;
 }) {
   const { projectName, projectDesc, tags, code, demo, image } = project;
   const titleHref = demo || code || "#";
@@ -164,6 +180,7 @@ function ProjectCard({
                   target="_blank"
                   rel="noreferrer noopener"
                   className="inline-flex items-center gap-1.5 allow-system-cursor"
+                  onClick={() => onClick?.(titleHref)}
                 >
                   <span className="truncate">{projectName}</span>
                   {/* Arrow SVG next to heading */}
@@ -204,6 +221,7 @@ function ProjectCard({
                     aria-label="View code on GitHub"
                     title="GitHub"
                     style={{ color: colors.tertiary }}
+                    onClick={() => onClick?.(code)}
                   >
                     <FiGithub className="text-[1.05rem]" />
                   </Link>
@@ -242,6 +260,7 @@ function ProjectCard({
                 target="_blank"
                 rel="noreferrer noopener"
                 className="inline-flex items-center gap-1.5"
+                onClick={() => onClick?.(titleHref)}
               >
                 <span className="truncate">{projectName}</span>
                 {/* Arrow SVG next to heading */}
@@ -290,6 +309,7 @@ function ProjectCard({
                   aria-label="View code on GitHub"
                   title="GitHub"
                   style={{ color: colors.tertiary }}
+                  onClick={() => onClick?.(code)}
                 >
                   <FiGithub className="text-[1.05rem]" />
                 </Link>

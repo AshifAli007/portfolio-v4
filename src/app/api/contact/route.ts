@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { contactsData } from "@/data/contactsData";
+import { recordEvent } from "@/lib/analytics";
 
 export const dynamic = "force-dynamic";
 
@@ -27,12 +28,15 @@ export async function POST(req: Request) {
   }
 
   const body = (await req.json().catch(() => null)) as
-    | { name?: string; email?: string; message?: string }
+    | { name?: string; email?: string; message?: string; meta?: Record<string, unknown> }
     | null;
 
   const name = (body?.name ?? "").trim();
   const email = (body?.email ?? "").trim();
   const message = (body?.message ?? "").trim();
+  const metaPage = body?.meta && typeof body.meta === "object" ? (body.meta as Record<string, unknown>).page : null;
+  const page =
+    typeof metaPage === "string" && metaPage.length <= 200 ? metaPage : undefined;
 
   if (!name || !email || !message) {
     return NextResponse.json({ error: "Please include name, email, and message." }, { status: 400 });
@@ -78,6 +82,11 @@ export async function POST(req: Request) {
     }).catch((err) => {
       console.error("Failed to send confirmation email", err);
     });
+
+    // record analytics (best effort)
+    recordEvent({ eventType: "contact_submit", page }).catch((err) =>
+      console.error("Failed to record contact analytics", err),
+    );
 
     return NextResponse.json({ ok: true });
   } catch (error) {

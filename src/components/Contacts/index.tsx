@@ -59,10 +59,11 @@ export default function Contacts({ id = "contacts", colors }: Props) {
         setIsSubmitting(true);
         setSuccess(false);
         try {
+            const meta = typeof window !== "undefined" ? { page: window.location.pathname } : undefined;
             const res = await fetch("/api/contact", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, message }),
+                body: JSON.stringify({ name, email, message, meta }),
             });
             const data = (await res.json().catch(() => null)) as { error?: string } | null;
             if (!res.ok) {

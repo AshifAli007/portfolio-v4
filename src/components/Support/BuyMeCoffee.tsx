@@ -24,6 +24,17 @@ export default function BuyMeCoffee({ id = "coffee", colors }: Props) {
     setIsLoading(true);
     setMessage(null);
     try {
+      // fire-and-forget analytics
+      void fetch("/api/analytics/track", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          event: "coffee_click",
+          page: typeof window !== "undefined" ? window.location.pathname : "/coffee",
+        }),
+        keepalive: true,
+      });
+
       const res = await fetch("/api/coffee/checkout", { method: "POST" });
       const data = (await res.json()) as { url?: string; error?: string };
       if (!res.ok || !data?.url) {
