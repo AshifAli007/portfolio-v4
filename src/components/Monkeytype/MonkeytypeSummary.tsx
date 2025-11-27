@@ -88,7 +88,7 @@ export default function MonkeytypeSummary({
             <p className="text-xs text-slate-400">
               {view.timestamp ? `Last test • ${formatAgo(view.timestamp)}` : "Latest test stats"}
             </p>
-          </div>
+        </div>
           <a
             href="https://monkeytype.com/profile/AshifAli"
             target="_blank"
@@ -96,6 +96,14 @@ export default function MonkeytypeSummary({
             aria-label="Open Monkeytype profile"
             className="relative bottom-3 inline-flex h-9 w-9 items-center justify-center rounded-lg hover:bg-white/[0.08] transition-colors"
             style={{ color: accent }}
+            onClick={() =>
+              fetch("/api/analytics/track", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ event: "monkeytype_click", target: "profile" }),
+                keepalive: true,
+              }).catch(() => {})
+            }
           >
             <FaExternalLinkAlt />
           </a>

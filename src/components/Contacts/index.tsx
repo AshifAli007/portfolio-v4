@@ -96,6 +96,14 @@ export default function Contacts({ id = "contacts", colors }: Props) {
                     aria-label={label}
                     className="grid place-items-center rounded-full w-[38px] h-[38px] text-[0.78rem] transition-transform"
                     style={{ backgroundColor: colors.primary, color: colors.secondary }}
+                    onClick={() =>
+                        fetch("/api/analytics/track", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ event: "social_click", target: label, page: "contacts" }),
+                            keepalive: true,
+                        }).catch(() => {})
+                    }
                 >
                     {children}
                 </a>
@@ -150,6 +158,23 @@ export default function Contacts({ id = "contacts", colors }: Props) {
                 <div className="flex flex-col lg:flex-row items-start gap-8">
                     {/* Form */}
                     <div className="w-full lg:w-2/5">
+                        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[0.78rem] text-slate-200 shadow-sm">
+                            <span className="font-semibold" style={{ color: colors.primary }}>New</span>
+                            <a
+                                href="/analytics"
+                                className="underline-offset-2 transition hover:text-white"
+                                onClick={() =>
+                                    fetch("/api/analytics/track", {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({ event: "page_view", page: "/analytics" }),
+                                        keepalive: true,
+                                    }).catch(() => {})
+                                }
+                            >
+                                View site analytics
+                            </a>
+                        </div>
                         <form onSubmit={handleContactForm} className="flex flex-col">
                             {/* Name */}
                             <label

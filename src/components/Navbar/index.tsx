@@ -17,6 +17,15 @@ export default function Navbar({ resumeHref = "/resume.pdf" }: NavbarProps) {
   
   const showSideNav = pathname === "/";
 
+  const track = (event: string, target?: string) => {
+    fetch("/api/analytics/track", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ event, target, page: pathname }),
+      keepalive: true,
+    }).catch(() => {});
+  };
+
   const handleScrollToAbout: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.preventDefault();
     const el = document.getElementById("about");
@@ -60,6 +69,7 @@ export default function Navbar({ resumeHref = "/resume.pdf" }: NavbarProps) {
           rel="noreferrer noopener"
           aria-label="GitHub"
           className="rounded-full border border-white/15 bg-white/5 p-2 text-white transition hover:border-white/40 hover:bg-white/10 hover:text-[#89d3ce]"
+          onClick={() => track("social_click", "github")}
         >
           <FiGithub className="h-5 w-5" />
         </a>
@@ -69,6 +79,7 @@ export default function Navbar({ resumeHref = "/resume.pdf" }: NavbarProps) {
           rel="noreferrer noopener"
           aria-label="LinkedIn"
           className="rounded-full border border-white/15 bg-white/5 p-2 text-white transition hover:border-white/40 hover:bg-white/10 hover:text-[#89d3ce]"
+          onClick={() => track("social_click", "linkedin")}
         >
           <FiLinkedin className="h-5 w-5" />
         </a>
@@ -87,6 +98,7 @@ export default function Navbar({ resumeHref = "/resume.pdf" }: NavbarProps) {
                 target="_blank"
                 rel="noreferrer noopener"
                 className="group flex items-center text-white text-[0.75rem] uppercase tracking-[0.1em] no-underline"
+                onClick={() => track("resume_click", "resume")}
               >
                 <span className="mr-4 block h-px w-8 border border-white transition-all duration-150 ease-in-out group-hover:w-16" />
                 <span>Resume</span>
@@ -113,6 +125,17 @@ export default function Navbar({ resumeHref = "/resume.pdf" }: NavbarProps) {
                 <span>Sports</span>
               </a>
             </li>
+
+            {/* <li className="py-[0.55rem]">
+              <a
+                href="/analytics"
+                className="group flex items-center text-white text-[0.75rem] uppercase tracking-[0.1em] no-underline"
+                onClick={() => track("page_view", "/analytics")}
+              >
+                <span className="mr-4 block h-px w-8 border border-white transition-all duration-150 ease-in-out group-hover:w-16" />
+                <span>Analytics</span>
+              </a>
+            </li> */}
           </ul>
         </nav>
       )}

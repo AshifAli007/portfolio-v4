@@ -114,6 +114,18 @@ export default function NowPlayingCard() {
             target="_blank"
             rel="noreferrer"
             className="ml-0 text-[#1DB954] transition hover:text-[#89d3ce] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#89d3ce] sm:ml-auto"
+            onClick={() =>
+              fetch("/api/analytics/track", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  event: "spotify_click",
+                  target: item?.name ?? "now_playing",
+                  meta: { artists: item?.artists?.map((a) => a.name).join(", ") },
+                }),
+                keepalive: true,
+              }).catch(() => {})
+            }
           >
             <FaExternalLinkAlt />
           </a>

@@ -6,6 +6,11 @@ const allowedEvents: Set<EventType> = new Set([
   "coffee_click",
   "contact_submit",
   "project_click",
+  "resume_click",
+  "social_click",
+  "recommendation_click",
+  "spotify_click",
+  "monkeytype_click",
 ]);
 
 export const dynamic = "force-dynamic";

@@ -13,9 +13,10 @@ const truncate = (str: string, max = 270) => {
 
 type RecommendationCardProps = {
   recommendation: Recommendation;
+  onClick?: (target: string) => void;
 };
 
-const RecommendationCard = ({ recommendation }: RecommendationCardProps) => {
+const RecommendationCard = ({ recommendation, onClick }: RecommendationCardProps) => {
   const { authorName, authorTitle, avatarUrl, text, date } = recommendation;
   const truncatedText = truncate(text);
   const isTruncated = truncatedText.length < text.length;
@@ -52,6 +53,7 @@ const RecommendationCard = ({ recommendation }: RecommendationCardProps) => {
           target="_blank"
           rel="noreferrer"
           className="mt-2 inline-block text-sm text-[#89d3ce] underline-offset-4 transition hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#89d3ce]"
+          onClick={() => onClick?.(`recommendation_${authorName}`)}
         >
           Read more →
         </Link>

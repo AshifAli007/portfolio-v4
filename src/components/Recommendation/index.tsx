@@ -1,3 +1,5 @@
+"use client";
+
 import RecommendationCarousel from "./RecommendationCarousel";
 import RecommendationCard from "./RecommendationCard";
 import type { Recommendation } from "./types";
@@ -7,16 +9,23 @@ const PROFILE_URL = "https://www.linkedin.com/in/mohammad-ashif-cv/";
 
 const Recommendations = () => {
   const hasCarousel = recommendations.length > 2;
+  const track = (target: string) =>
+    fetch("/api/analytics/track", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ event: "recommendation_click", target }),
+      keepalive: true,
+    }).catch(() => {});
 
   const renderContent = (items: Recommendation[]) => {
     if (hasCarousel) {
-      return <RecommendationCarousel recommendations={items} />;
+      return <RecommendationCarousel recommendations={items} onClick={track} />;
     }
 
     return (
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {items.map((recommendation) => (
-          <RecommendationCard key={recommendation.id} recommendation={recommendation} />
+          <RecommendationCard key={recommendation.id} recommendation={recommendation} onClick={track} />
         ))}
       </div>
     );
@@ -42,6 +51,7 @@ const Recommendations = () => {
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#89d3ce]"
+            onClick={() => track("view_all_linkedin")}
           >
             View all on LinkedIn
           </a>

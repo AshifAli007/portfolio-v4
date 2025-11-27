@@ -3,9 +3,10 @@ import type { Recommendation } from "./types";
 
 type RecommendationCarouselProps = {
   recommendations: Recommendation[];
+  onClick?: (target: string) => void;
 };
 
-const RecommendationCarousel = ({ recommendations }: RecommendationCarouselProps) => {
+const RecommendationCarousel = ({ recommendations, onClick }: RecommendationCarouselProps) => {
   const loopedRecommendations = [...recommendations, ...recommendations];
 
   return (
@@ -15,6 +16,7 @@ const RecommendationCarousel = ({ recommendations }: RecommendationCarouselProps
           <RecommendationCard
             key={`${recommendation.id}-${index}`}
             recommendation={recommendation}
+            onClick={onClick}
           />
         ))}
       </div>
