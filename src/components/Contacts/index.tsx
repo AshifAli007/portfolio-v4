@@ -132,6 +132,23 @@ export default function Contacts({ id = "contacts", colors }: Props) {
                 </div>
             )}
 
+            {/* Vertical analytics tab (right side) */}
+            <a
+                href="/analytics"
+                className="hidden md:flex absolute right-0 top-1/2 z-[150] -translate-y-1/2 items-center justify-center rounded-r-xl border border-white/10 bg-white/5 px-2 py-2 text-[0.75rem] font-semibold text-white shadow-lg backdrop-blur transition hover:border-white/30 hover:bg-white/10"
+                style={{ writingMode: "vertical-rl", transform: "translateY(-50%) rotate(180deg)", color: colors.primary }}
+                onClick={() =>
+                    fetch("/api/analytics/track", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ event: "page_view", page: "/analytics" }),
+                        keepalive: true,
+                    }).catch(() => {})
+                }
+            >
+                Analytics
+            </a>
+
             <div className="w-full px-6 md:px-12 lg:px-20 mt-6 md:mt-8">
                 <h1
                     className="mb-6 font-semibold leading-tight"
@@ -155,26 +172,11 @@ export default function Contacts({ id = "contacts", colors }: Props) {
                     <div className="mt-1 text-xs text-slate-400">— Interstellar</div>
                 </div>
 
+
+
                 <div className="flex flex-col lg:flex-row items-start gap-8">
                     {/* Form */}
                     <div className="w-full lg:w-2/5">
-                        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[0.78rem] text-slate-200 shadow-sm">
-                            <span className="font-semibold" style={{ color: colors.primary }}>New</span>
-                            <a
-                                href="/analytics"
-                                className="underline-offset-2 transition hover:text-white"
-                                onClick={() =>
-                                    fetch("/api/analytics/track", {
-                                        method: "POST",
-                                        headers: { "Content-Type": "application/json" },
-                                        body: JSON.stringify({ event: "page_view", page: "/analytics" }),
-                                        keepalive: true,
-                                    }).catch(() => {})
-                                }
-                            >
-                                View site analytics
-                            </a>
-                        </div>
                         <form onSubmit={handleContactForm} className="flex flex-col">
                             {/* Name */}
                             <label
