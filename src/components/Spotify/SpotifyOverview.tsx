@@ -61,6 +61,7 @@ export default function SpotifyOverview() {
                   <img
                     src={track.album.images?.[0]?.url ?? "/placeholder.png"}
                     alt={`Album art for ${track.name}`}
+                    loading="lazy"
                     className="h-10 w-10 flex-shrink-0 rounded-lg object-cover"
                   />
                   <div className="min-w-0">

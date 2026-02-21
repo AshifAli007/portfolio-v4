@@ -6,11 +6,9 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import Audio from '@/components/Audio';
 
 type GalaxyProps = {
-    /** Accent color for the outer ring (was theme.primary). */
-    primaryColor?: string; // e.g. "#89d3ce"
+    primaryColor?: string;
 };
 
-/** Shaders (unchanged) */
 const vertex = /* glsl */ `
 uniform float time;
 uniform float size;
@@ -22,7 +20,6 @@ uniform vec2 pixels;
 attribute vec3 pos;
 float PI = 3.141592653589793238;
 
-// --- noise helpers by Stefan Gustavson (MIT) ---
 vec3 mod289(vec3 x){return x - floor(x * (1.0 / 289.0)) * 289.0;}
 vec4 mod289(vec4 x){return x - floor(x * (1.0 / 289.0)) * 289.0;}
 vec4 permute(vec4 x){return mod289(((x*34.0)+10.0)*x);}
@@ -123,6 +120,9 @@ void main(){
 }
 `;
 
+const PARTICLE_COUNT = 5000;
+const MAX_PIXEL_RATIO = 1.5;
+
 export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
     const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -130,48 +130,36 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
         const container = containerRef.current;
         if (!container) return;
 
-        // Scene / Camera / Renderer
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(
             40,
-            window.innerWidth / window.innerHeight,
+            container.clientWidth / container.clientHeight,
             0.001,
             1000
         );
-        // camera position
         camera.position.set(1, 1, 3);
 
-        const setSizeToContainer = () => {
-            const w = container.clientWidth;
-            const h = container.clientHeight;
-            renderer.setSize(w, h);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            camera.aspect = w / h;
-            camera.updateProjectionMatrix();
-        };
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        setSizeToContainer();
-        // contorls the background color
+        const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: "default" });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO));
+        renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.setClearColor(0x000000, 0);
-        // renderer.physicallyCorrectLights = true;
         container.appendChild(renderer.domElement);
 
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableZoom = false;
 
-        // Raycaster helpers
         const raycaster = new THREE.Raycaster();
         const pointer = new THREE.Vector2();
         const point = new THREE.Vector3();
 
-        // Invisible ground plane for mouse projection
-        const mesh = new THREE.Mesh(
-            new THREE.PlaneGeometry(10, 10, 10, 10).rotateX(-Math.PI / 2),
-            new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
+        const hitPlane = new THREE.Mesh(
+            new THREE.PlaneGeometry(10, 10, 1, 1).rotateX(-Math.PI / 2),
+            new THREE.MeshBasicMaterial()
         );
-        // Not added to scene to keep it invisible; raycaster can still test against it.
 
         const materials: THREE.ShaderMaterial[] = [];
+        const geometries: THREE.BufferGeometry[] = [];
+        const sharedTexture = new THREE.TextureLoader().load("/galaxy/particle.webp");
 
         const lerp = (a: number, b: number, t: number) => a * (1 - t) + b * t;
 
@@ -182,15 +170,14 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
             size: number;
             uAmp: number;
         }) {
-            const count = 10000;
             const particlegeo = new THREE.PlaneGeometry(1, 1);
             const geo = new THREE.InstancedBufferGeometry();
-            geo.instanceCount = count;
+            geo.instanceCount = PARTICLE_COUNT;
             geo.setAttribute("position", particlegeo.getAttribute("position"));
             geo.index = particlegeo.index;
 
-            const pos = new Float32Array(count * 3);
-            for (let i = 0; i < count; i++) {
+            const pos = new Float32Array(PARTICLE_COUNT * 3);
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
                 const theta = Math.random() * 2 * Math.PI;
                 const r = lerp(opts.min_radius, opts.max_radius, Math.random());
                 const x = r * Math.sin(theta);
@@ -199,12 +186,13 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
                 pos.set([x, y, z], i * 3);
             }
             geo.setAttribute("pos", new THREE.InstancedBufferAttribute(pos, 3, false));
+            geometries.push(geo);
+            geometries.push(particlegeo);
 
             const material = new THREE.ShaderMaterial({
-                // extensions: { derivatives: "#extension GL_OES_standard_derivatives : enable" },
                 side: THREE.DoubleSide,
                 uniforms: {
-                    uTexture: { value: new THREE.TextureLoader().load("/galaxy/particle.webp") },
+                    uTexture: { value: sharedTexture },
                     time: { value: 0 },
                     uAmp: { value: opts.uAmp },
                     uMouse: { value: new THREE.Vector3() },
@@ -223,7 +211,6 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
             scene.add(points);
         }
 
-        // Rings (kept from your JS; outer ring uses primaryColor)
         const opts = [
             { min_radius: 0.7, max_radius: 1.5, color: "#f7b373", size: 1, uAmp: 1 },
             { min_radius: 0.4, max_radius: 1.5, color: "#88b3ce", size: 0.7, uAmp: 3 },
@@ -231,53 +218,58 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
         ];
         opts.forEach(addObject);
 
-        // Pointer move → project to plane
         const onPointerMove = (event: PointerEvent) => {
             pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
             pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
             raycaster.setFromCamera(pointer, camera);
-            const intersects = raycaster.intersectObjects([mesh]);
+            const intersects = raycaster.intersectObjects([hitPlane]);
             if (intersects.length > 0) {
                 point.copy(intersects[0].point);
             }
         };
-        window.addEventListener("pointermove", onPointerMove);
+        window.addEventListener("pointermove", onPointerMove, { passive: true });
 
-        // Animate
         let raf = 0;
         const animate = () => {
+            raf = requestAnimationFrame(animate);
+            if (document.hidden) return;
             materials.forEach((m) => {
                 (m.uniforms.time.value as number) += 0.001;
                 (m.uniforms.uMouse.value as THREE.Vector3).copy(point);
             });
             controls.update();
             renderer.render(scene, camera);
-            raf = requestAnimationFrame(animate);
         };
         animate();
 
-        // Resize
         const onResize = () => {
-            setSizeToContainer();
+            const w = container.clientWidth;
+            const h = container.clientHeight;
+            renderer.setSize(w, h);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_PIXEL_RATIO));
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
         };
         window.addEventListener("resize", onResize);
 
-        // Cleanup
         return () => {
             cancelAnimationFrame(raf);
             window.removeEventListener("resize", onResize);
             window.removeEventListener("pointermove", onPointerMove);
             if (container.contains(renderer.domElement)) container.removeChild(renderer.domElement);
+
+            geometries.forEach((g) => g.dispose());
+            materials.forEach((m) => m.dispose());
+            sharedTexture.dispose();
+            hitPlane.geometry.dispose();
+            (hitPlane.material as THREE.Material).dispose();
             renderer.dispose();
             scene.clear();
         };
     }, [primaryColor]);
 
-    // UI (Tailwind replaces the old CSS)
     return (
         <div className="relative">
-            {/* Down arrow */}
-
             <svg
                 onClick={() => {
                     document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
@@ -298,8 +290,6 @@ export default function Galaxy({ primaryColor = "#89d3ce" }: GalaxyProps) {
                 <Audio audioSrc="bg.mp3" />
             </div>
 
-
-            {/* WebGL mount */}
             <div
                 id="galaxy-container"
                 ref={containerRef}

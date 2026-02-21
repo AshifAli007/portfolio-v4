@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { mockFeatures, mockNowPlaying, mockPlaylist, mockTrack, mockTracks } from "@/data/spotify-mock";
+import { mockFeatures, mockNowPlaying, mockPlaylist, mockTracks } from "@/data/spotify-mock";
 import { spotifyGet } from "./fetch";
 import { hasSpotifyClientCredentialsEnv, hasSpotifyEnv } from "./config";
 import { SpotifyArtist, SpotifyAudioFeatures, SpotifyNowPlaying, SpotifyPlaylist, SpotifyTrack, SpotifyTrackAnalysis } from "./types";

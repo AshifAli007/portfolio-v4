@@ -28,7 +28,7 @@ export default function PlaylistSpotlight({ playlistIds }: PlaylistSpotlightProp
           return (
             <article key={playlist.id} className="rounded-xl border border-white/5 bg-white/5 p-3 hover:bg-white/10">
               <div className="flex gap-3">
-                <img src={cover} alt={`Cover of ${playlist.name}`} className="h-16 w-16 flex-shrink-0 rounded-xl object-cover" />
+                <img src={cover} alt={`Cover of ${playlist.name}`} loading="lazy" className="h-16 w-16 flex-shrink-0 rounded-xl object-cover" />
                 <div className="min-w-0">
                   <p className="text-sm font-semibold text-white">{playlist.name}</p>
                   <p className="text-xs text-slate-400">{playlist.description ?? "Curated vibes"}</p>

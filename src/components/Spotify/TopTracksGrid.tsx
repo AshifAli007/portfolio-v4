@@ -45,6 +45,7 @@ export default function TopTracksGrid() {
             <img
               src={track.album.images?.[0]?.url ?? "/placeholder.png"}
               alt={`Album art for ${track.name}`}
+              loading="lazy"
               className="h-14 w-14 rounded-xl object-cover"
             />
             <div className="min-w-0 flex-1">

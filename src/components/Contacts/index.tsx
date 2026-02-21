@@ -26,10 +26,45 @@ type Props = {
 
 const emailOk = (e: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.trim());
 
+function SocialIcon({
+    href,
+    label,
+    children,
+    bgColor,
+    fgColor,
+}: {
+    href?: string;
+    label: string;
+    children: React.ReactNode;
+    bgColor: string;
+    fgColor: string;
+}) {
+    if (!href) return null;
+    return (
+        <a
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={label}
+            className="grid place-items-center rounded-full w-[38px] h-[38px] text-[0.78rem] transition-transform"
+            style={{ backgroundColor: bgColor, color: fgColor }}
+            onClick={() =>
+                fetch("/api/analytics/track", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ event: "social_click", target: label, page: "contacts" }),
+                    keepalive: true,
+                }).catch(() => {})
+            }
+        >
+            {children}
+        </a>
+    );
+}
+
 export default function Contacts({ id = "contacts", colors }: Props) {
     const [toastOpen, setToastOpen] = useState(false);
     const [toastMsg, setToastMsg] = useState("");
-    const [hoverPos, setHoverPos] = useState(50);
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -83,32 +118,6 @@ export default function Contacts({ id = "contacts", colors }: Props) {
         }
     }
 
-    const SocialIcon: React.FC<{
-        href?: string;
-        label: string;
-        children: React.ReactNode;
-    }> = ({ href, label, children }) =>
-            href ? (
-                <a
-                    href={href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={label}
-                    className="grid place-items-center rounded-full w-[38px] h-[38px] text-[0.78rem] transition-transform"
-                    style={{ backgroundColor: colors.primary, color: colors.secondary }}
-                    onClick={() =>
-                        fetch("/api/analytics/track", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ event: "social_click", target: label, page: "contacts" }),
-                            keepalive: true,
-                        }).catch(() => {})
-                    }
-                >
-                    {children}
-                </a>
-            ) : null;
-
     return (
         <section
             id={id}
@@ -161,11 +170,10 @@ export default function Contacts({ id = "contacts", colors }: Props) {
                 <div
                     className="mb-8 block w-fit ml-auto rounded-2xl bg-white/5 p-4 text-right text-lg font-semibold text-white shadow-lg backdrop-blur"
                     style={{
-                        background: `linear-gradient(90deg, rgba(137,211,206,0.15) ${hoverPos - 50}%, ${colors.primary} ${hoverPos}%, rgba(137,211,206,0.15) ${hoverPos + 20}%)`,
+                        background: `linear-gradient(90deg, rgba(137,211,206,0.15) 0%, ${colors.primary} 50%, rgba(137,211,206,0.15) 70%)`,
                         color: "transparent",
                         WebkitBackgroundClip: "text",
                         backgroundClip: "text",
-                        transition: "background-position 200ms ease",
                     }}
                 >
                     “Love is the one thing that transcends time and space.”
@@ -324,37 +332,37 @@ export default function Contacts({ id = "contacts", colors }: Props) {
 
                         {/* Socials */}
                         <div className="mt-8 flex flex-wrap items-center justify-center gap-5">
-                            <SocialIcon href={socialsData.twitter} label="Twitter">
+                            <SocialIcon href={socialsData.twitter} label="Twitter" bgColor={colors.primary} fgColor={colors.secondary}>
                                 <FaTwitter size={15} />
                             </SocialIcon>
-                            <SocialIcon href={socialsData.github} label="GitHub">
+                            <SocialIcon href={socialsData.github} label="GitHub" bgColor={colors.primary} fgColor={colors.secondary}>
                                 <FaGithub size={15} />
                             </SocialIcon>
-                            <SocialIcon href={socialsData.linkedIn} label="LinkedIn">
+                            <SocialIcon href={socialsData.linkedIn} label="LinkedIn" bgColor={colors.primary} fgColor={colors.secondary}>
                                 <FaLinkedinIn size={15} />
                             </SocialIcon>
-                            <SocialIcon href={socialsData.instagram} label="Instagram">
+                            <SocialIcon href={socialsData.instagram} label="Instagram" bgColor={colors.primary} fgColor={colors.secondary}>
                                 <FaInstagram size={15} />
                             </SocialIcon>
-                            <SocialIcon href={socialsData.medium} label="Medium">
+                            <SocialIcon href={socialsData.medium} label="Medium" bgColor={colors.primary} fgColor={colors.secondary}>
                                 <FaMediumM size={15} />
                             </SocialIcon>
-                            <SocialIcon href={socialsData.blogger} label="Blogger">
+                            <SocialIcon href={socialsData.blogger} label="Blogger" bgColor={colors.primary} fgColor={colors.secondary}>
                                 <FaBloggerB size={15} />
                             </SocialIcon>
-                            <SocialIcon href={socialsData.youtube} label="YouTube">
+                            <SocialIcon href={socialsData.youtube} label="YouTube" bgColor={colors.primary} fgColor={colors.secondary}>
                                 <FaYoutube size={15} />
                             </SocialIcon>
-                            <SocialIcon href={socialsData.reddit} label="Reddit">
+                            <SocialIcon href={socialsData.reddit} label="Reddit" bgColor={colors.primary} fgColor={colors.secondary}>
                                 <FaRedditAlien size={15} />
                             </SocialIcon>
-                            <SocialIcon href={socialsData.stackOverflow} label="Stack Overflow">
+                            <SocialIcon href={socialsData.stackOverflow} label="Stack Overflow" bgColor={colors.primary} fgColor={colors.secondary}>
                                 <FaStackOverflow size={15} />
                             </SocialIcon>
-                            <SocialIcon href={socialsData.codepen} label="CodePen">
+                            <SocialIcon href={socialsData.codepen} label="CodePen" bgColor={colors.primary} fgColor={colors.secondary}>
                                 <FaCodepen size={15} />
                             </SocialIcon>
-                            <SocialIcon href={socialsData.gitlab} label="GitLab">
+                            <SocialIcon href={socialsData.gitlab} label="GitLab" bgColor={colors.primary} fgColor={colors.secondary}>
                                 <FaGitlab size={15} />
                             </SocialIcon>
                         </div>

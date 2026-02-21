@@ -42,6 +42,7 @@ export default function TopArtistsGrid() {
                 <img
                   src={artist.images[0].url}
                   alt={`Portrait of ${artist.name}`}
+                  loading="lazy"
                   className="h-14 w-14 rounded-full object-cover"
                 />
               ) : (

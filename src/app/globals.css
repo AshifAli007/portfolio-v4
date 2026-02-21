@@ -5,17 +5,11 @@
 :root{
   --background:#080808;
   --foreground:#ededed;
-
-    /* --background:#ffffff;
-  --foreground:#171717; */
-
-  /* mouse glow vars */
   --mouse-x:50vw;
   --mouse-y:50vh;
-  --glow-size:1200px;               /* radius */
-  /* --glow-color:137,211,206;         */
-    --glow-color:77,219,209;        /* your teal as R,G,B */
-  --glow-opacity:0.12;             /* intensity */
+  --glow-size:1200px;
+  --glow-color:77,219,209;
+  --glow-opacity:0.12;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -65,23 +59,10 @@
   }
 }
 
-/* ---- body uses the gradient as part of its background ---- */
 body{
-  background:
-    radial-gradient(
-      circle var(--glow-size) at var(--mouse-x) var(--mouse-y),
-      rgba(var(--glow-color), var(--glow-opacity)),
-      transparent 65%
-    ),
-    var(--background);
+  background: var(--background);
   color:var(--foreground);
   font-family:var(--font-geist-sans, Arial, Helvetica, sans-serif);
-  background-attachment: fixed; /* keeps glow anchored to viewport */
-}
-
-/* respect reduced motion (optional) */
-@media (prefers-reduced-motion: reduce){
-  body{ background: var(--background); }
 }
 
 /* link + about font (your existing utilities) */
@@ -114,14 +95,6 @@ body{
     ),
     var(--section-bg, transparent);
   background-attachment: fixed;
-
-  transition: background 140ms ease-out;
-  will-change: background;
-}
-
-body {
-  transition: background 10000ms ease-out;
-  will-change: background;
 }
 
 html, body {
@@ -188,4 +161,9 @@ body::-webkit-scrollbar {
 .organic-map {
   transition: clip-path 1s cubic-bezier(.77,0,.18,1);
   will-change: clip-path;
+}
+
+.section-lazy {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
 }

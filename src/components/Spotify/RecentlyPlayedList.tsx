@@ -36,6 +36,7 @@ export default function RecentlyPlayedList() {
             <img
               src={track?.album?.images?.[0]?.url ?? "/placeholder.png"}
               alt={`Album art for ${track?.name ?? "Unknown track"}`}
+              loading="lazy"
               className="h-12 w-12 rounded-lg object-cover"
             />
             <div className="min-w-0 flex-1">

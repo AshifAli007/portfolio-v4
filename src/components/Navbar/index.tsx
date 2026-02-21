@@ -1,18 +1,14 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import { usePathname } from "next/navigation";
 import { FiGithub, FiLinkedin } from "react-icons/fi";
 
 type NavbarProps = {
-  /** Override if your resume lives elsewhere. Put resume.pdf in /public for default. */
   resumeHref?: string;
 };
 
 export default function Navbar({ resumeHref = "/resume.pdf" }: NavbarProps) {
-  const container = useRef<HTMLDivElement | null>(null);
-  const nameRef = useRef<HTMLHeadingElement | null>(null);
-  const positionRef = useRef<HTMLHeadingElement | null>(null);
   const pathname = usePathname();
   
   const showSideNav = pathname === "/";
@@ -36,7 +32,6 @@ export default function Navbar({ resumeHref = "/resume.pdf" }: NavbarProps) {
     <>
       {/* Top centered name + role (absolute, transparent) */}
       <div
-        ref={container}
         className="absolute left-0 top-0 z-[99] flex w-full items-center justify-center bg-transparent h-20 sm:h-[6.5rem]"
       >
         <div className="mt-4 flex w-full flex-col items-center justify-between">
@@ -47,7 +42,6 @@ export default function Navbar({ resumeHref = "/resume.pdf" }: NavbarProps) {
             className="no-underline"
           >
             <h1
-              ref={nameRef}
               className="cursor-pointer select-none font-medium text-[2.2rem] font-[var(--font-geist-mono)]"
               style={{ color: "#89d3ce" }}
             >
@@ -55,7 +49,7 @@ export default function Navbar({ resumeHref = "/resume.pdf" }: NavbarProps) {
             </h1>
           </a>
 
-          <h4 ref={positionRef} className="text-white text-[0.75rem] uppercase tracking-[0.1em]">
+          <h4 className="text-white text-[0.75rem] uppercase tracking-[0.1em]">
             Software Engineer
           </h4>
         </div>
@@ -126,16 +120,7 @@ export default function Navbar({ resumeHref = "/resume.pdf" }: NavbarProps) {
               </a>
             </li>
 
-            {/* <li className="py-[0.55rem]">
-              <a
-                href="/analytics"
-                className="group flex items-center text-white text-[0.75rem] uppercase tracking-[0.1em] no-underline"
-                onClick={() => track("page_view", "/analytics")}
-              >
-                <span className="mr-4 block h-px w-8 border border-white transition-all duration-150 ease-in-out group-hover:w-16" />
-                <span>Analytics</span>
-              </a>
-            </li> */}
+          
           </ul>
         </nav>
       )}

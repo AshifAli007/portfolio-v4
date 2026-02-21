@@ -95,6 +95,7 @@ export default function NowPlayingCard() {
           <img
             src={item.album.images[0].url}
             alt={`Album art for ${item.name}`}
+            loading="lazy"
             className="h-14 w-14 flex-shrink-0 rounded-xl object-cover sm:h-16 sm:w-16"
           />
         ) : (

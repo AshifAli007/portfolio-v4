@@ -74,11 +74,13 @@ useEffect(() => {
   };
 
   const animate = () => {
-    // ease ring towards the target
-    ringX.current += (mouseX.current - ringX.current) * ease;
-    ringY.current += (mouseY.current - ringY.current) * ease;
-    setRingTransform(ringX.current, ringY.current);
-
+    const dx = mouseX.current - ringX.current;
+    const dy = mouseY.current - ringY.current;
+    if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+      ringX.current += dx * ease;
+      ringY.current += dy * ease;
+      setRingTransform(ringX.current, ringY.current);
+    }
     rafId.current = requestAnimationFrame(animate);
   };
 
@@ -130,10 +132,7 @@ useEffect(() => {
           transition-[opacity,scale] duration-150
           will-change-transform
         "
-        style={{
-          transform: "translate(-50%, -50%)",
-          backdropFilter: "blur(0px)",
-        }}
+        style={{ transform: "translate(-50%, -50%)" }}
       />
     </>
   );

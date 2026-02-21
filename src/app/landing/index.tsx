@@ -34,38 +34,40 @@ export default function Home() {
     };
     return (
         <div>
-            {/* <PreLoader /> */}
             <Navbar />
             <Galaxy />
             <About />
 
-
-            <Experience colors={theme} />
-            <Education />
-            <Skills />
-            <Projects colors={theme} />
-            <Recommendations />
-            <RecentActivitiesPreview />
-            <SpotifyOverview />
-            <section className="mt-12 px-4 md:px-8">
+            <div className="section-lazy">
+                <Experience colors={theme} />
+            </div>
+            <div className="section-lazy">
+                <Education />
+            </div>
+            <div className="section-lazy">
+                <Skills />
+            </div>
+            <div className="section-lazy">
+                <Projects colors={theme} />
+            </div>
+            <div className="section-lazy">
+                <Recommendations />
+            </div>
+            <div className="section-lazy">
+                <RecentActivitiesPreview />
+            </div>
+            <div className="section-lazy">
+                <SpotifyOverview />
+            </div>
+            <section className="section-lazy mt-12 px-4 md:px-8">
                 <div className="mx-auto grid max-w-6xl gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(260px,0.9fr)]">
                     <MonkeytypeSummary className="mt-0" fullWidth />
                     <BuyMeCoffee colors={theme} />
                 </div>
             </section>
-            <Contacts colors={theme} />
-            {/* <Galaxy />
-        <About />
-      <Education />
-      <Skills />
-      <Experience />
-      <Projects />
-      <Achievement />
-      <Services />
-      <Testimonials />
-      <Blog />
-      <Contacts /> */}
-            {/* <Footer /> */}
+            <div className="section-lazy">
+                <Contacts colors={theme} />
+            </div>
         </div>
     );
 }

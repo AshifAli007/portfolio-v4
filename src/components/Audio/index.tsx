@@ -51,43 +51,52 @@ export default function AudioToggle({
     }
   }, [playing]);
 
-  // Wave animation
-  useEffect(() => {
-    targetAmpRef.current = playing ? 6 : 0; // px amplitude
-  }, [playing]);
-
-  // Accent pulled from site theme (#89d3ce); adjust if theme changes
   const accent = "#89d3ce";
   const idleStroke = "rgba(255,255,255,0.55)";
   const activeStroke = accent;
+  const animatingRef = useRef(false);
 
   useEffect(() => {
-    const animate = () => {
-      phaseRef.current += 0.02;
-      // Ease amplitude
-      currentAmpRef.current += (targetAmpRef.current - currentAmpRef.current) * 0.08;
+    targetAmpRef.current = playing ? 6 : 0;
 
-      const w = 20;
-      const h = 34;
-      const midY = h / 2;
-      const points = 100; // smoothness
-      const amp = currentAmpRef.current;
-      let d = `M 0 ${midY}`;
-      for (let i = 0; i <= points; i++) {
-        const x = (i / points) * w;
-        const y =
-          midY +
-          Math.sin(phaseRef.current + (i / points) * Math.PI * 2 * 1.5) *
-            amp *
-            Math.sin((i / points) * Math.PI); // taper ends
-        d += ` L ${x.toFixed(2)} ${y.toFixed(2)}`;
-      }
-      if (pathRef.current) pathRef.current.setAttribute("d", d);
+    if (playing && !animatingRef.current) {
+      animatingRef.current = true;
+      const animate = () => {
+        phaseRef.current += 0.02;
+        currentAmpRef.current += (targetAmpRef.current - currentAmpRef.current) * 0.08;
+
+        const w = 20;
+        const h = 34;
+        const midY = h / 2;
+        const points = 60;
+        const amp = currentAmpRef.current;
+        let d = `M 0 ${midY}`;
+        for (let i = 0; i <= points; i++) {
+          const x = (i / points) * w;
+          const y =
+            midY +
+            Math.sin(phaseRef.current + (i / points) * Math.PI * 2 * 1.5) *
+              amp *
+              Math.sin((i / points) * Math.PI);
+          d += ` L ${x.toFixed(2)} ${y.toFixed(2)}`;
+        }
+        if (pathRef.current) pathRef.current.setAttribute("d", d);
+
+        if (targetAmpRef.current === 0 && currentAmpRef.current < 0.01) {
+          animatingRef.current = false;
+          const flatD = `M 0 ${midY} L ${w} ${midY}`;
+          if (pathRef.current) pathRef.current.setAttribute("d", flatD);
+          return;
+        }
+        rafRef.current = requestAnimationFrame(animate);
+      };
       rafRef.current = requestAnimationFrame(animate);
+    }
+
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-    rafRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, []);
+  }, [playing]);
 
   return (
     <button

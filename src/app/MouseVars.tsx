@@ -1,4 +1,3 @@
-// components/MouseVars.tsx
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -7,9 +6,11 @@ export default function MouseVars() {
   const raf = useRef<number | null>(null);
   const x = useRef(0);
   const y = useRef(0);
+  const glowRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const root = document.documentElement;
+    const glow = glowRef.current;
     const galaxy = document.getElementById("galaxy-container");
 
     const onMove = (e: PointerEvent) => {
@@ -22,6 +23,9 @@ export default function MouseVars() {
         raf.current = requestAnimationFrame(() => {
           root.style.setProperty("--mouse-x", `${x.current}px`);
           root.style.setProperty("--mouse-y", `${y.current}px`);
+          if (glow) {
+            glow.style.transform = `translate(${x.current}px, ${y.current}px)`;
+          }
           raf.current = null;
         });
       }
@@ -34,5 +38,24 @@ export default function MouseVars() {
     };
   }, []);
 
-  return null;
+  return (
+    <div
+      ref={glowRef}
+      aria-hidden
+      className="pointer-events-none fixed z-0"
+      style={{
+        top: 0,
+        left: 0,
+        width: "var(--glow-size)",
+        height: "var(--glow-size)",
+        marginLeft: "calc(var(--glow-size) / -2)",
+        marginTop: "calc(var(--glow-size) / -2)",
+        borderRadius: "50%",
+        background:
+          "radial-gradient(circle, rgba(var(--glow-color), var(--glow-opacity)), transparent 65%)",
+        willChange: "transform",
+        transform: "translate(50vw, 50vh)",
+      }}
+    />
+  );
 }

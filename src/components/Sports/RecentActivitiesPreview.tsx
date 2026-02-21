@@ -9,7 +9,6 @@ import type { NormalizedActivity } from "@/lib/strava/types";
 
 const KM_TO_MILES = 0.621371;
 const KM_PER_MILE = 1 / KM_TO_MILES;
-const METERS_TO_FEET = 3.28084;
 
 const accentColor = "#89d3ce";
 const stravaOrange = "#FC4C02";
@@ -17,11 +16,6 @@ const stravaOrange = "#FC4C02";
 const formatDistance = (distanceKm: number | undefined): string => {
   if (!distanceKm || distanceKm <= 0) return "—";
   return `${(distanceKm * KM_TO_MILES).toFixed(1)} mi`;
-};
-
-const formatElevation = (elevationM: number | undefined): string => {
-  if (elevationM === undefined || elevationM === null) return "—";
-  return `${Math.round(elevationM * METERS_TO_FEET)} ft`;
 };
 
 const formatDuration = (seconds: number | undefined): string => {
@@ -124,13 +118,6 @@ const ActivityRouteMap = ({ polyline }: { polyline?: string | null }) => {
   const maxLat = Math.max(...lats);
   const minLng = Math.min(...lngs);
   const maxLng = Math.max(...lngs);
-  const paddingLat = Math.max((maxLat - minLat) * 0.1, 0.001);
-  const paddingLng = Math.max((maxLng - minLng) * 0.1, 0.001);
-  const bounds: [[number, number], [number, number]] = [
-    [minLat - paddingLat, minLng - paddingLng],
-    [maxLat + paddingLat, maxLng + paddingLng],
-  ];
-
   const center: [number, number] = [
     (minLat + maxLat) / 2,
     (minLng + maxLng) / 2,
