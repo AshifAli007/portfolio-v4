@@ -45,7 +45,7 @@ export default function Navbar({ resumeHref = "/resume.pdf" }: NavbarProps) {
               className="cursor-pointer select-none font-medium text-[2.2rem] font-[var(--font-geist-mono)]"
               style={{ color: "#89d3ce" }}
             >
-              M<span className="text-[1.7rem]">OHAMAMD</span> A<span className="text-[1.7rem]">SHIF</span>
+              M<span className="text-[1.7rem]">OHAMMAD</span> A<span className="text-[1.7rem]">SHIF</span>
             </h1>
           </a>
 

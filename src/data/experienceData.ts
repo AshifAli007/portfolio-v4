@@ -12,6 +12,27 @@ export type ExperienceItem = {
 
 export const experienceData: ExperienceItem[] = [
     {
+        id: 0,
+        company: "Liberate Innovation",
+        jobtitle: "Software Engineer",
+        startYear: "Oct 2025",
+        endYear: "Present",
+        href: "#",
+        summary:
+            "Architecting production voice AI agents using multi-agent orchestration and NLP-driven conversation flows for insurance FNOL (First Notice of Loss). Designed an agent architecture workflow that reduced voice agent build time from 8-10 days to under 1 day, a 10x acceleration adopted across the engineering team. Built reusable AI agent skills, prompt templates, and diagnostic tooling that enabled the broader team to ship agents faster. Delivering end-to-end voice flows for 5+ insurance clients, integrating with policy management systems like Guidewire.",
+        skills: [
+            "Voice AI",
+            "NLP",
+            "Multi-Agent Orchestration",
+            "LLM Prompt Engineering",
+            "Generative AI",
+            "Python",
+            "TypeScript",
+            "Cursor AI",
+            "Guidewire",
+        ],
+    },
+    {
         id: 1,
         company: "BigCommerce",
         jobtitle: "AWS Integration Engineer",

@@ -44,35 +44,35 @@ export default function About({
 
                     <div className="max-w-[65ch] space-y-4 text-gray-400 font-medium font-about">
                         <p className="text-[0.85rem] leading-5 md:leading-6">
-                            {"I'm"} Ashif, recent M.S. in Computer Science from Florida State
-                            University, with about five years of hands-on software engineering
-                            across <span className="text-link">frontend, backend, and cloud</span>. I love the craft of shipping
-                            interfaces that feel effortless while being engineered for
-                            reliability and performance. I learn fast, and move teams toward a
-                            shared goal.
+                            {"I'm"} Ashif, M.S. in Computer Science from Florida State
+                            University, with over six years of software engineering
+                            across <span className="text-link">AI, cloud infrastructure, and full-stack development</span>. I love
+                            building systems that work at scale, whether {"that's"} voice AI agents
+                            handling real-time conversations or distributed pipelines syncing
+                            hundreds of thousands of records.
                         </p>
 
                         <p className="text-[0.85rem] leading-5 md:leading-6">
-                            Most recently at BigCommerce, I worked as an Integration Engineer
-                            connecting external platforms with internal <span className="text-link">AWS systems</span>. I built
-                            and hardened data exchanges and syncs. That experience also
-                            sharpened my Agile instincts: clear tickets, tight feedback loops
-                            in Jira, and crisp comms with CRM, security, and platform teams.
+                            Currently at Liberate Innovation, I build production{" "}
+                            <span className="text-link">voice AI agents</span> using multi-agent
+                            orchestration and NLP-driven conversation flows. I designed a workflow
+                            that cut agent build time from 8-10 days to under 1 day (a 10x
+                            acceleration) and built reusable skills and tooling adopted across
+                            the engineering team.
                         </p>
 
                         <p className="text-[0.85rem] leading-5 md:leading-6">
-                            {"Before that I shipped production code on Dell's subscriptions"}
-                            {" platform, where "}<span className="text-link">micro-frontend architecture</span> taught me a lot about
-                            <span className="text-link"> isolation, reliability, performance</span>, and writing scalable code. At Amantya
-                            Technologies, our telecom product (NetPrizm) rendered 5G towers
-                            and user equipment at city scale. I partnered with the team to
-                            optimize bundling, lean on animation strategies, and add MongoDB
-                            indexing to keep performance smooth as we scaled.
+                            Before that, I worked as an Integration Engineer at BigCommerce
+                            connecting platforms with <span className="text-link">AWS systems</span>, shipped
+                            microfrontend components at Dell Technologies, and built data-intensive
+                            telecom applications at Amantya Technologies. Each role sharpened a
+                            different edge: <span className="text-link">distributed systems, performance
+                            optimization, and scalable architecture</span>.
                         </p>
 
                         <p className="text-[0.85rem] leading-5 md:leading-6">
                             Outside work, I recharge with calisthenics
-                            {"and jiu-jitsu, and I'm endlessly curious about space and physics."}
+                            {" and jiu-jitsu, and I'm endlessly curious about space and physics."}
                         </p>
                     </div>
                 </div>
