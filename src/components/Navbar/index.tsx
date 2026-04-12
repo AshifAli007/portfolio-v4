@@ -1,8 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { FiGithub, FiLinkedin } from "react-icons/fi";
+
+function isMathSubdomainHost(hostname: string) {
+  return hostname === "math.ashifdesigns.com" || hostname === "math.localhost";
+}
 
 type NavbarProps = {
   resumeHref?: string;
@@ -10,8 +14,13 @@ type NavbarProps = {
 
 export default function Navbar({ resumeHref = "/resume.pdf" }: NavbarProps) {
   const pathname = usePathname();
-  
-  const showSideNav = pathname === "/";
+  const [mathSubdomain, setMathSubdomain] = useState(false);
+
+  useEffect(() => {
+    setMathSubdomain(isMathSubdomainHost(window.location.hostname));
+  }, []);
+
+  const showSideNav = pathname === "/" && !mathSubdomain;
 
   const track = (event: string, target?: string) => {
     fetch("/api/analytics/track", {
@@ -120,7 +129,15 @@ export default function Navbar({ resumeHref = "/resume.pdf" }: NavbarProps) {
               </a>
             </li>
 
-          
+            <li className="py-[0.55rem]">
+              <a
+                href="/math"
+                className="group flex items-center text-white text-[0.75rem] uppercase tracking-[0.1em] no-underline"
+              >
+                <span className="mr-4 block h-px w-8 border border-white transition-all duration-150 ease-in-out group-hover:w-16" />
+                <span>Math</span>
+              </a>
+            </li>
           </ul>
         </nav>
       )}
