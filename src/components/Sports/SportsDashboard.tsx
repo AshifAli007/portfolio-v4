@@ -65,7 +65,7 @@ const formatDistance = (distanceKm: number | undefined, fractionDigits = 1): str
 };
 
 const formatDuration = (seconds: number | undefined): string => {
-  if (!seconds || seconds <= 0) return "—";
+  if (!seconds || seconds <= 0) return "-";
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
   if (hours > 0) return `${hours}h ${minutes}m`;
@@ -129,10 +129,10 @@ const ActivitySpotlight = ({ activity }: { activity: NormalizedActivity | null }
             </p>
             <p className="mt-1 text-2xl font-semibold text-white">
               {activity.sportType === "Run"
-                ? paceMinutes ?? "—"
+                ? paceMinutes ?? "-"
                 : activity.averageSpeedMps
                   ? `${(activity.averageSpeedMps * MPS_TO_MPH).toFixed(1)} mph`
-                  : "—"}
+                  : "-"}
             </p>
           </div>
         </div>
@@ -159,11 +159,11 @@ const ActivitySpotlight = ({ activity }: { activity: NormalizedActivity | null }
         <ul className="mt-4 space-y-4 text-sm text-slate-200">
           <li>
             <span className="text-slate-400">Average heart rate</span>
-            <p className="text-lg font-semibold text-white">{activity.averageHeartrate ? `${Math.round(activity.averageHeartrate)} bpm` : "—"}</p>
+            <p className="text-lg font-semibold text-white">{activity.averageHeartrate ? `${Math.round(activity.averageHeartrate)} bpm` : "-"}</p>
           </li>
           <li>
             <span className="text-slate-400">Max heart rate</span>
-            <p className="text-lg font-semibold text-white">{activity.maxHeartrate ? `${Math.round(activity.maxHeartrate)} bpm` : "—"}</p>
+            <p className="text-lg font-semibold text-white">{activity.maxHeartrate ? `${Math.round(activity.maxHeartrate)} bpm` : "-"}</p>
           </li>
           <li>
             <span className="text-slate-400">Gear</span>
@@ -419,7 +419,7 @@ const CommunitySnapshot = ({ community }: { community: CommunitySnapshot }) => (
             <li key={club.id} className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
               <p className="text-sm font-medium text-white">{club.name}</p>
               <p className="text-xs uppercase tracking-[0.2rem] text-slate-400">
-                {club.sportType} • {club.memberCount ?? "—"} members
+                {club.sportType} • {club.memberCount ?? "-"} members
               </p>
               {club.url && (
                 <a
@@ -473,7 +473,7 @@ const RacePortfolio = ({ races }: { races: NormalizedActivity[] }) => {
             <div>
               <dt className="text-xs uppercase tracking-[0.2rem] text-slate-400">Avg HR</dt>
               <dd className="mt-1 text-lg font-semibold text-white">
-                {race.averageHeartrate ? `${Math.round(race.averageHeartrate)} bpm` : "—"}
+                {race.averageHeartrate ? `${Math.round(race.averageHeartrate)} bpm` : "-"}
               </dd>
             </div>
           </dl>
@@ -701,7 +701,7 @@ export default function SportsDashboard() {
           <Section
             id="community"
             title="Community Snapshot"
-            description="Engagement showcases team energy—kudos, comments, and the clubs where I show up consistently."
+            description="Engagement showcases team energy: kudos, comments, and the clubs where I show up consistently."
           >
             <CommunitySnapshot community={data.community} />
           </Section>

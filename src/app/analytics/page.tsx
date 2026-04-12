@@ -53,7 +53,7 @@ const ListCard = ({ title, items, labelKey, countKey, className }: ListCardProps
       {items.length === 0 && <li className="text-sm text-slate-400">No data yet.</li>}
       {items.map((item, idx) => (
         <li key={`${item[labelKey]}-${idx}`} className="flex items-center justify-between text-sm text-slate-100">
-          <span className="truncate">{String(item[labelKey]) || "—"}</span>
+          <span className="truncate">{String(item[labelKey]) || "-"}</span>
           <span className="text-slate-300">{item[countKey]}</span>
         </li>
       ))}
@@ -93,7 +93,7 @@ export default async function AnalyticsPage() {
   }
 
   const formatAgo = (iso?: string | null) => {
-    if (!iso) return "—";
+    if (!iso) return "-";
     const date = new Date(iso);
     const diff = Date.now() - date.getTime();
     if (Number.isNaN(diff) || diff < 0) return "just now";

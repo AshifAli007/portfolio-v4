@@ -107,11 +107,10 @@ useEffect(() => {
   if (!shouldUse) return null;
 
   return (
-    <>
+    <div className="custom-cursor-layer pointer-events-none" aria-hidden>
       {/* inner bold dot */}
       <div
         ref={dotRef}
-        aria-hidden
         className="
           fixed left-0 top-0 z-[9999] pointer-events-none
           h-[0.3rem] w-[0.3rem] rounded-full
@@ -124,7 +123,6 @@ useEffect(() => {
       {/* trailing ring */}
       <div
         ref={ringRef}
-        aria-hidden
         className="
           fixed left-0 top-0 z-[9999] pointer-events-none
           h-[1.7rem] w-[1.7rem] rounded-full
@@ -134,6 +132,6 @@ useEffect(() => {
         "
         style={{ transform: "translate(-50%, -50%)" }}
       />
-    </>
+    </div>
   );
 }

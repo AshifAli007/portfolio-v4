@@ -70,14 +70,14 @@ export async function POST(req: Request) {
     await resend.emails.send({
       from: fromAddress,
       to: [email],
-      subject: "Thanks for reaching out — I got your message",
-      text: `Hi ${name || "there"},\n\nThanks for getting in touch. I received your message and will reply within 3 days.\n\nYou sent:\n${message}\n\n— Ashif`,
+      subject: "Thanks for reaching out - I got your message",
+      text: `Hi ${name || "there"},\n\nThanks for getting in touch. I received your message and will reply within 3 days.\n\nYou sent:\n${message}\n\n- Ashif`,
       html: `<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #0f172a; line-height: 1.6;">
         <p style="margin: 0 0 10px;">Hi ${escape(name || "there")},</p>
         <p style="margin: 0 0 10px;">Thanks for getting in touch. I received your message and will reply within 3 days.</p>
         <p style="margin: 12px 0 6px;"><strong>Your message:</strong></p>
         <p style="white-space: pre-wrap; background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;">${escape(message)}</p>
-        <p style="margin: 16px 0 0;">— Ashif</p>
+        <p style="margin: 16px 0 0;">- Ashif</p>
       </div>`,
     }).catch((err) => {
       console.error("Failed to send confirmation email", err);

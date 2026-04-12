@@ -177,7 +177,7 @@ export default function Contacts({ id = "contacts", colors }: Props) {
                     }}
                 >
                     “Love is the one thing that transcends time and space.”
-                    <div className="mt-1 text-xs text-slate-400">— Interstellar</div>
+                    <div className="mt-1 text-xs text-slate-400">- Interstellar</div>
                 </div>
 
 

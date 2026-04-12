@@ -41,7 +41,7 @@ export default function ExperienceCard({ item, colors }: Props) {
         <div
           className="pt-1 text-[0.72rem] font-medium tracking-wide whitespace-nowrap text-gray-400 font-semibold"
         >
-          {item.startYear} — {item.endYear}
+          {item.startYear} - {item.endYear}
         </div>
 
         {/* Right: content */}

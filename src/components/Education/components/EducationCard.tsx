@@ -50,7 +50,7 @@ export default function EducationCard({ item, colors }: Props) {
             <div className="grid grid-cols-1 sm:grid-cols-[8.5rem_1fr] gap-22 items-start">
                 {/* Left: date */}
                 <div className="pt-1 text-[0.72rem] font-medium tracking-wide whitespace-nowrap text-gray-400 font-semibold">
-                    {item.startYear} — {item.endYear}
+                    {item.startYear} - {item.endYear}
                 </div>
 
                 {/* Right: content */}

@@ -14,12 +14,12 @@ const accentColor = "#89d3ce";
 const stravaOrange = "#FC4C02";
 
 const formatDistance = (distanceKm: number | undefined): string => {
-  if (!distanceKm || distanceKm <= 0) return "—";
+  if (!distanceKm || distanceKm <= 0) return "-";
   return `${(distanceKm * KM_TO_MILES).toFixed(1)} mi`;
 };
 
 const formatDuration = (seconds: number | undefined): string => {
-  if (!seconds || seconds <= 0) return "—";
+  if (!seconds || seconds <= 0) return "-";
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
   if (hours > 0) return `${hours}h ${minutes}m`;

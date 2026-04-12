@@ -64,9 +64,9 @@ export default function MonkeytypeSummary({
     totalWords: 0,
     testsCompleted: 0,
     currentStreak: 0,
-    keyboard: "—",
-    mode: "—",
-    language: "—",
+    keyboard: "-",
+    mode: "-",
+    language: "-",
     timestamp: "",
   };
   const view = data ?? fallback;
