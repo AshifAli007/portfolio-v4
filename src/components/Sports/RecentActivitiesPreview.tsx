@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { Map, GeoJson } from "pigeon-maps";
 
 import { useStravaOverview } from "@/hooks/useStravaOverview";
+import { cartoTiles } from "@/lib/cartoTiles";
 import type { NormalizedActivity } from "@/lib/strava/types";
 
 const KM_TO_MILES = 0.621371;
@@ -91,8 +92,7 @@ const decodePolyline = (encoded: string): Array<[number, number]> => {
   return coordinates;
 };
 
-const darkProvider = (x: number, y: number, z: number, dpr?: number) =>
-  `https://cartodb-basemaps-${"abcd"[x % 4]}.global.ssl.fastly.net/dark_nolabels/${z}/${x}/${y}${dpr && dpr >= 2 ? "@2x" : ""}.png`;
+const darkProvider = cartoTiles("dark_nolabels");
 
 const ActivityRouteMap = ({ polyline }: { polyline?: string | null }) => {
   if (!polyline) {

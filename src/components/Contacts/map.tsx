@@ -3,20 +3,15 @@
 import { Map, Marker, Overlay, GeoJsonLoader } from "pigeon-maps";
 import { useState } from "react";
 import type { Feature } from "geojson";
+import { cartoTiles } from "@/lib/cartoTiles";
 
-
+const provider = cartoTiles("dark_all");
 
 type Props = { height?: number; className?: string };
 
 export default function FooterMapLite({ height = 260, className = "" }: Props) {
   const FIXED_CENTER: [number, number] = [42.3601, -71.0589]; // [lat, lng]
   const [center] = useState<[number, number]>(FIXED_CENTER);
-
-
-  const provider = (x: number, y: number, z: number, dpr?: number) =>
-    `https://cartodb-basemaps-${"abcd"[x % 4]}.global.ssl.fastly.net/dark_all/${z}/${x}/${y}${
-      dpr && dpr >= 2 ? "@2x" : ""
-    }.png`;
 
   return (
     <div
