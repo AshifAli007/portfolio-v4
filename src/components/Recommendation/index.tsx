@@ -2,6 +2,7 @@
 
 import RecommendationCarousel from "./RecommendationCarousel";
 import RecommendationCard from "./RecommendationCard";
+import ToptalCard from "./ToptalCard";
 import type { Recommendation } from "./types";
 import recommendations from "@/data/recommendations";
 
@@ -19,20 +20,26 @@ const Recommendations = () => {
 
   const renderContent = (items: Recommendation[]) => {
     if (hasCarousel) {
-      return <RecommendationCarousel recommendations={items} onClick={track} />;
+      return (
+        <div className="space-y-6">
+          <RecommendationCarousel recommendations={items} onClick={track} />
+          <ToptalCard />
+        </div>
+      );
     }
 
     return (
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:[&>:last-child:nth-child(odd)]:col-span-2">
         {items.map((recommendation) => (
           <RecommendationCard key={recommendation.id} recommendation={recommendation} onClick={track} />
         ))}
+        <ToptalCard />
       </div>
     );
   };
 
   return (
-    <section aria-label="LinkedIn recommendations" className="max-w-6xl mx-auto px-4 md:px-6 py-8">
+    <section aria-label="Recommendations" className="max-w-6xl mx-auto px-4 md:px-6 py-8">
       <div className="rounded-3xl border border-white/10 bg-black/30 p-4 shadow-xl backdrop-blur md:p-4">
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div className="space-y-2">

@@ -5,6 +5,9 @@ import type { Recommendation } from "./types";
 
 const PROFILE_URL = "https://www.linkedin.com/in/mohammad-ashif-cv/";
 
+const cardClassName =
+  "flex w-full min-w-[280px] max-w-xl flex-shrink-0 flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-lg backdrop-blur transition-colors hover:bg-white/[0.06]";
+
 const truncate = (str: string, max = 270) => {
   if (!str) return "";
   if (str.length <= max) return str;
@@ -24,7 +27,7 @@ const RecommendationCard = ({ recommendation, onClick }: RecommendationCardProps
   return (
     <article
       aria-label={`Recommendation from ${authorName}`}
-      className="flex w-full min-w-[280px] max-w-xl flex-shrink-0 flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-lg backdrop-blur transition-colors hover:bg-white/[0.06]"
+      className={cardClassName}
     >
       <div className="flex items-center gap-3">
         {avatarUrl ? (
@@ -62,5 +65,5 @@ const RecommendationCard = ({ recommendation, onClick }: RecommendationCardProps
   );
 };
 
-export { truncate };
+export { cardClassName, truncate };
 export default RecommendationCard;

@@ -43,7 +43,7 @@ export default function SpotifyOverview() {
         <div className="flex items-center justify-between gap-4">
           <div>
             <p className="text-sm uppercase tracking-wide text-[#89d3ce]">Music</p>
-            <h2 className="text-xl font-bold text-[#1DB954] sm:text-2xl">What I&apos;m Listening To</h2>
+            <h2 className="text-xl font-bold text-[#1DB954] sm:text-2xl">What I Listen To When I&apos;m Working Out</h2>
             <p className="text-sm text-slate-300 sm:text-base">Live snapshot of my current soundtrack and mood.</p>
           </div>
           <MoodBadge mood={mood} />
