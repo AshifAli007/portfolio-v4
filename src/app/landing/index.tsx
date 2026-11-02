@@ -12,7 +12,6 @@ import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import Contacts from "@/components/Contacts";
 import Recommendations from "@/components/Recommendation";
-import RecentActivitiesPreview from "@/components/Sports/RecentActivitiesPreview";
 import MonkeytypeSummary from "@/components/Monkeytype/MonkeytypeSummary";
 import BuyMeCoffee from "@/components/Support/BuyMeCoffee";
 
@@ -51,9 +50,6 @@ export default function Home() {
             </div>
             <div className="section-lazy">
                 <Recommendations />
-            </div>
-            <div className="section-lazy">
-                <RecentActivitiesPreview />
             </div>
             <section className="section-lazy mt-12 px-4 md:px-8">
                 <div className="mx-auto grid max-w-6xl gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(260px,0.9fr)]">

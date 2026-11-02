@@ -121,16 +121,6 @@ export default function Navbar({ resumeHref = "/resume.pdf" }: NavbarProps) {
 
             <li className="py-[0.55rem]">
               <a
-                href="/sports"
-                className="group flex items-center text-white text-[0.75rem] uppercase tracking-[0.1em] no-underline"
-              >
-                <span className="mr-4 block h-px w-8 border border-white transition-all duration-150 ease-in-out group-hover:w-16" />
-                <span>Sports</span>
-              </a>
-            </li>
-
-            <li className="py-[0.55rem]">
-              <a
                 href="/blog"
                 className="group flex items-center text-white text-[0.75rem] uppercase tracking-[0.1em] no-underline"
               >
