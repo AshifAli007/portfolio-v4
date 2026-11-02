@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-/** Hostnames that should serve the /math route tree without changing the URL bar. */
+/** Hostnames that should serve the /blog route tree without changing the URL bar. */
 const MATH_HOSTS = new Set(["math.ashifdesigns.com", "math.localhost"]);
 
 function isMathHost(host: string): boolean {
@@ -29,12 +29,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (pathname.startsWith("/math")) {
+  if (pathname.startsWith("/blog")) {
     return NextResponse.next();
   }
 
   const url = request.nextUrl.clone();
-  url.pathname = pathname === "/" ? "/math" : `/math${pathname}`;
+  url.pathname = pathname === "/" ? "/blog" : `/blog${pathname}`;
   return NextResponse.rewrite(url);
 }
 

@@ -16,11 +16,11 @@ const mathSerif = Source_Serif_4({
 });
 
 export const metadata: Metadata = {
-  title: "Math",
+  title: "Blog",
   description: "Math notes, equations, and interactive sketches (journal style).",
 };
 
-export default function MathLayout({ children }: { children: React.ReactNode }) {
+export default function BlogLayout({ children }: { children: React.ReactNode }) {
   return (
     <MathRouteShell>
       <div

@@ -1,4 +1,4 @@
-export type MathPost = {
+export type BlogPost = {
   slug: string;
   title: string;
   /** ISO date string YYYY-MM-DD */
@@ -8,7 +8,15 @@ export type MathPost = {
 };
 
 /** Ordered newest first. */
-export const mathPosts: MathPost[] = [
+export const blogPosts: BlogPost[] = [
+  {
+    slug: "affirmations",
+    title: "Morning Affirmations by Theme",
+    date: "2026-11-01",
+    excerpt:
+      "Fifty short affirmations for motivation, stress, abundance, focus, and gratitude. Pick one or two when you need them.",
+    tag: "Mindset",
+  },
   {
     slug: "lorenz",
     title: "The Lorenz attractor",

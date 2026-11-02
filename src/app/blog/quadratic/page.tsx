@@ -12,7 +12,7 @@ export default function QuadraticArticlePage() {
     <article className="mx-auto max-w-2xl px-6 pb-24 pt-2 md:px-8">
       <nav className="mb-10 text-sm">
         <Link
-          href="/math"
+          href="/blog"
           className="math-link font-medium text-[color:var(--math-terracotta)] no-underline hover:underline"
         >
           ← Journal

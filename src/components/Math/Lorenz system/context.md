@@ -36,14 +36,14 @@ Common parameter set (classic chaotic behavior): \(\sigma = 10\), \(\rho = 28\),
 
 ## Site architecture (math subdomain)
 
-**Entry:** `math.ashifdesigns.com` (or `/math` on the main domain) - same Next.js app, middleware rewrites subdomain to `/math/*`.
+**Entry:** `math.ashifdesigns.com` (or `/blog` on the main domain) - same Next.js app, middleware rewrites subdomain to `/blog/*`.
 
 | Layer | Purpose |
 |-------|---------|
-| **Index - “posters”** | `/math` lists **cards / posters** (title, blurb, optional thumbnail) linking to each topic. |
-| **Topic page** | e.g. `/math/lorenz` - intro copy, external links, equations, then the **hero: 3D interactive demo** at the top or just below a short lead. |
+| **Index - “posters”** | `/blog` lists **cards / posters** (title, blurb, optional thumbnail) linking to each topic. |
+| **Topic page** | e.g. `/blog/lorenz` - intro copy, external links, equations, then the **hero: 3D interactive demo** at the top or just below a short lead. |
 
-Future topics can follow the same pattern (`/math/…`).
+Future topics can follow the same pattern (`/blog/…`).
 
 ---
 
@@ -70,11 +70,11 @@ Future topics can follow the same pattern (`/math/…`).
 
 ## Implementation checklist (for this repo)
 
-- [ ] Add route **`/math/lorenz`** (`src/app/math/lorenz/page.tsx`) using existing **`math/layout.tsx`** (journal theme).
+- [ ] Add route **`/blog/lorenz`** (`src/app/blog/lorenz/page.tsx`) using existing **`blog/layout.tsx`** (journal theme).
 - [ ] Move Lorenz-specific UI into something like `src/components/Math/Lorenz/` (consider renaming folder **`Lorenz system` → `lorenz`** to avoid spaces in paths).
 - [ ] `lorenzIntegrator.ts`: RK4 + Lorenz RHS; output `Float32Array` positions for one or two runs.
 - [ ] `LorenzAttractorCanvas.tsx` (client): Three.js canvas, lines, axes helper, `OrbitControls` (from `three/examples`).
-- [ ] `/math` index: add a **poster card** linking to Lorenz.
+- [ ] `/blog` index: add a **poster card** linking to Lorenz.
 - [ ] Optional: slider for \(\varepsilon\) (initial separation) or \(\rho\) (watch bifurcation behavior - scope carefully).
 
 ---
@@ -90,5 +90,5 @@ Future topics can follow the same pattern (`/math/…`).
 
 ## Open decisions
 
-- **Poster grid layout** on `/math`: single column vs. grid on large screens.
+- **Poster grid layout** on `/blog`: single column vs. grid on large screens.
 - **Mobile:** simplify controls or reduce point count for WebGL performance.

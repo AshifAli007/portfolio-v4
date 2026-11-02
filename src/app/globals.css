@@ -195,7 +195,7 @@ body::-webkit-scrollbar {
   contain-intrinsic-size: auto 600px;
 }
 
-/* ---- Math journal theme (/math, math subdomain) ---- */
+/* ---- Math journal theme (/blog, math subdomain) ---- */
 html.math-route {
   background-color: var(--math-bg, #faf8f4);
 }

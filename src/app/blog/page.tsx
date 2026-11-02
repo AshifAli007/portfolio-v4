@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { mathPosts } from "@/data/mathPosts";
+import { blogPosts } from "@/data/blogPosts";
 
 function formatPostDate(iso: string) {
   return new Date(`${iso}T12:00:00`).toLocaleDateString(undefined, {
@@ -9,7 +9,7 @@ function formatPostDate(iso: string) {
   });
 }
 
-export default function MathJournalPage() {
+export default function BlogJournalPage() {
   return (
     <main className="mx-auto max-w-2xl px-6 pb-24 pt-2 md:px-8">
       <header className="mb-14 border-b border-stone-200/90 pb-10">
@@ -22,9 +22,9 @@ export default function MathJournalPage() {
       </header>
 
       <div className="flex flex-col gap-12">
-        {mathPosts.map((post) => (
+        {blogPosts.map((post) => (
           <article key={post.slug} className="group">
-            <Link href={`/math/${post.slug}`} className="block outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--math-terracotta)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f4]">
+            <Link href={`/blog/${post.slug}`} className="block outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--math-terracotta)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f4]">
               <time
                 dateTime={post.date}
                 className="text-sm font-medium tabular-nums text-stone-500"
